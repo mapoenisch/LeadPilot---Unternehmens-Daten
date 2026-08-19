@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Forms" subtitle="Button and Input" -->
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<div id="root" style="background:var(--color-bg);padding:24px;"></div>
+<script type="text/babel">
+const { Button, Input, Icon } = window.LeadPilotDesignSystem_8c9681;
+function Demo(){
+  return <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
+    <div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>
+      <Button variant="primary">Get started</Button>
+      <Button variant="secondary" iconLeft={<Icon name="plus" size={16}/>}>Add lead</Button>
+      <Button variant="accent">Upgrade now</Button>
+      <Button variant="primary" disabled>Disabled</Button>
+    </div>
+    <div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>
+      <Button variant="primary" size="sm">Small</Button>
+      <Button variant="primary" size="md">Medium</Button>
+      <Button variant="primary" size="lg">Large</Button>
+    </div>
+    <div style={{display:'flex',gap:'16px',flexWrap:'wrap'}}>
+      <Input label="Work email" placeholder="you@company.com" style={{width:'220px'}} />
+      <Input label="Company" error="This field is required" style={{width:'220px'}} />
+    </div>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
