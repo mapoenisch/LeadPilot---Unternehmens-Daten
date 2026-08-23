@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 
@@ -5,7 +6,7 @@ interface ContentModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 export function ContentModal({ isOpen, onClose, title, content }: ContentModalProps) {

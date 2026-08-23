@@ -16,6 +16,10 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-10 text-[10px] uppercase tracking-widest font-bold">
             <a href="#problem" className="text-[#1A1A1A] hover:text-[#E56014] transition-colors">Problem</a>
             <a href="#funktionen" className="text-[#1A1A1A] hover:text-[#E56014] transition-colors">Funktionen</a>
+            <a href="#dashboard" className="text-[#1A1A1A] hover:text-[#E56014] transition-colors flex items-center gap-1">
+              Dashboard
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E56014]"></span>
+            </a>
             <a href="#preise" className="text-[#1A1A1A] hover:text-[#E56014] transition-colors">Preise</a>
           </div>
 
@@ -41,6 +45,7 @@ export function Navbar() {
         <div className="md:hidden bg-[#F9F8F6] border-b border-[#1A1A1A]/10 px-4 pt-2 pb-6 space-y-6">
           <a href="#problem" className="block text-xs uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#E56014]" onClick={() => setIsOpen(false)}>Problem</a>
           <a href="#funktionen" className="block text-xs uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#E56014]" onClick={() => setIsOpen(false)}>Funktionen</a>
+          <a href="#dashboard" className="block text-xs uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#E56014]" onClick={() => setIsOpen(false)}>Dashboard</a>
           <a href="#preise" className="block text-xs uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#E56014]" onClick={() => setIsOpen(false)}>Preise</a>
           <div className="pt-6 border-t border-[#1A1A1A]/10 flex flex-col gap-4">
             <button className="w-full text-left text-xs uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#E56014]">

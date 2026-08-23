@@ -8,6 +8,7 @@ import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
 import { Features } from './components/Features';
 import { InterfaceTour } from './components/InterfaceTour';
+import { CRMDashboard } from './components/CRMDashboard';
 import { KeyMetrics } from './components/KeyMetrics';
 import { CaseStudy } from './components/CaseStudy';
 import { ClientVoices } from './components/ClientVoices';
@@ -26,6 +27,7 @@ export default function App() {
         <ProblemSection />
         <Features />
         <InterfaceTour />
+        <CRMDashboard />
         <KeyMetrics />
         <CaseStudy />
         <ClientVoices />

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, MouseEvent, ReactNode, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { ContentModal } from './ContentModal';
 import { Logo } from './Logo';
@@ -14,7 +14,7 @@ import {
 
 export function Footer() {
   const [subscribed, setSubscribed] = useState(false);
-  const [modalConfig, setModalConfig] = useState<{ isOpen: boolean; title: string; content: React.ReactNode | null }>({
+  const [modalConfig, setModalConfig] = useState<{ isOpen: boolean; title: string; content: ReactNode | null }>({
     isOpen: false,
     title: '',
     content: null
@@ -25,7 +25,7 @@ export function Footer() {
     setSubscribed(true);
   };
 
-  const openModal = (e: React.MouseEvent, title: string, content: React.ReactNode) => {
+  const openModal = (e: MouseEvent, title: string, content: ReactNode) => {
     e.preventDefault();
     setModalConfig({ isOpen: true, title, content });
   };
@@ -51,6 +51,7 @@ export function Footer() {
             <h4 className="text-[10px] uppercase tracking-[0.4em] mb-8 font-semibold text-[#E56014]">Produkt</h4>
             <ul className="space-y-4">
               <li><a href="#funktionen" className="text-xs uppercase tracking-widest font-bold hover:text-[#E56014] transition-colors">Funktionen</a></li>
+              <li><a href="#dashboard" className="text-xs uppercase tracking-widest font-bold hover:text-[#E56014] transition-colors">Dashboard</a></li>
               <li><a href="#preise" className="text-xs uppercase tracking-widest font-bold hover:text-[#E56014] transition-colors">Preise</a></li>
               <li><a href="#" className="text-xs uppercase tracking-widest font-bold hover:text-[#E56014] transition-colors">Integrationen</a></li>
               <li><a href="#" className="text-xs uppercase tracking-widest font-bold hover:text-[#E56014] transition-colors">Updates</a></li>
