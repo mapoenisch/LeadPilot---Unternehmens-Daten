@@ -1,0 +1,11 @@
+:root{
+--shadow-card:0 8px 24px rgba(0,0,0,.35);
+--shadow-modal:0 24px 64px rgba(0,0,0,.5);
+--shadow-glow-cyan:0 0 24px rgba(0,217,198,.35);
+--shadow-glow-cyan-strong:0 0 40px rgba(0,217,198,.45);
+--shadow-glow-orange:0 0 20px rgba(255,122,61,.3);
+--focus-ring:0 0 0 3px var(--cyan-a12);
+--ease-standard:cubic-bezier(.4,0,.2,1); /* @kind other */
+--duration-fast:120ms; /* @kind other */
+--duration-base:200ms; /* @kind other */
+}
