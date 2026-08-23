@@ -53,7 +53,15 @@ import {
   Megaphone,
   Rocket,
   Milestone,
-  Tag
+  Tag,
+  Crosshair,
+  Filter,
+  FilterX,
+  RotateCcw,
+  X,
+  ChevronRight,
+  PieChart as PieChartIcon,
+  BarChart3
 } from 'lucide-react';
 import { LeadSourcesModal } from './LeadSourcesModal';
 import { ExportReportModal } from './ExportReportModal';
@@ -83,6 +91,33 @@ export interface StageData {
   previousYearLeads?: number;
   previousYearValue?: number;
   previousYearConv?: number;
+}
+
+export interface DrilldownFilter {
+  type: 'stage' | 'month' | 'rep';
+  id: string;
+  name: string;
+  shortLabel: string;
+  color: string;
+  badgeText: string;
+  subtitle?: string;
+}
+
+export interface CRMDeal {
+  id: string;
+  company: string;
+  value: string;
+  rawValue: number;
+  stageId: string;
+  stage: string;
+  prob: string;
+  rep: string;
+  nextAction: string;
+  status: 'hot' | 'warm' | 'active' | 'closing';
+  month: string;
+  source: string;
+  contactPerson: string;
+  daysInStage: number;
 }
 
 const basePipelineStages: StageData[] = [
@@ -194,11 +229,19 @@ const baseMonthlyProjection = [
   { month: 'Dez', actual: null, projected: 224000, target: 140000, optimistic: 258000, baseline: 195000, previousYear: 124000 }
 ];
 
-const sampleDeals = [
-  { id: 'D-801', company: 'Maschinenbau Weber GmbH', value: '€42.000', stage: 'Angebot & Verhandlung', prob: '85%', rep: 'Sarah M.', nextAction: 'Vertragsprüfung via DocuSign', status: 'hot' },
-  { id: 'D-802', company: 'LogiFlow Solutions AG', value: '€28.500', stage: 'Produkt-Demo', prob: '60%', rep: 'Julian K.', nextAction: 'Technisches Deep-Dive Follow-up', status: 'warm' },
-  { id: 'D-803', company: 'Klausen Precision Parts', value: '€64.000', stage: 'Erstkontakt qualifiziert', prob: '45%', rep: 'Elena B.', nextAction: 'Entscheider-Call Terminierung', status: 'active' },
-  { id: 'D-804', company: 'Bavaria SolarTech KG', value: '€19.200', stage: 'Abschlussphase', prob: '95%', rep: 'Sarah M.', nextAction: 'Onboarding Termin bestätigen', status: 'closing' }
+const sampleDeals: CRMDeal[] = [
+  { id: 'D-801', company: 'Maschinenbau Weber GmbH', value: '€42.000', rawValue: 42000, stageId: 'proposal', stage: '4. Angebot & Verhandlung', prob: '85%', rep: 'Sarah M.', nextAction: 'Vertragsprüfung via DocuSign', status: 'hot', month: 'Jun', source: 'Web-Formular', contactPerson: 'Dr. Thomas Weber', daysInStage: 4 },
+  { id: 'D-802', company: 'LogiFlow Solutions AG', value: '€28.500', rawValue: 28500, stageId: 'demo', stage: '3. Produkt-Demo & Pitch', prob: '60%', rep: 'Julian K.', nextAction: 'Technisches Deep-Dive Follow-up', status: 'warm', month: 'Jun', source: 'LinkedIn Kampagnen', contactPerson: 'Kerstin Bauer', daysInStage: 3 },
+  { id: 'D-803', company: 'Klausen Precision Parts', value: '€64.000', rawValue: 64000, stageId: 'contacted', stage: '2. Qualifiziert & Erstkontakt', prob: '45%', rep: 'Elena B.', nextAction: 'Entscheider-Call Terminierung', status: 'active', month: 'Mai', source: 'Automatischer Speed-Call', contactPerson: 'Markus Klausen', daysInStage: 1 },
+  { id: 'D-804', company: 'Bavaria SolarTech KG', value: '€19.200', rawValue: 19200, stageId: 'won', stage: '5. Abschluss (Closed Won)', prob: '95%', rep: 'Sarah M.', nextAction: 'Onboarding Termin bestätigen', status: 'closing', month: 'Jun', source: 'Empfehlungen', contactPerson: 'Stefan Gruber', daysInStage: 12 },
+  { id: 'D-805', company: 'Nordic Pharma Systems', value: '€85.000', rawValue: 85000, stageId: 'proposal', stage: '4. Angebot & Verhandlung', prob: '80%', rep: 'Julian K.', nextAction: 'SLA-Finalisierung & DSGVO-Audit', status: 'hot', month: 'Mai', source: 'Google Ads Blitz', contactPerson: 'Dr. Anne Lindholm', daysInStage: 6 },
+  { id: 'D-806', company: 'Alpine Robotics AG', value: '€52.000', rawValue: 52000, stageId: 'inbound', stage: '1. Inbound Leads', prob: '25%', rep: 'Elena B.', nextAction: 'Lead-Qualifizierung & Speed-Call', status: 'active', month: 'Jun', source: 'Web-Formular', contactPerson: 'Florian Zeiler', daysInStage: 1 },
+  { id: 'D-807', company: 'Hanseatic Retail Group', value: '€110.000', rawValue: 110000, stageId: 'won', stage: '5. Abschluss (Closed Won)', prob: '100%', rep: 'Sarah M.', nextAction: 'ERP-Schnittstellen Go-Live', status: 'closing', month: 'Mai', source: 'Enterprise Summit', contactPerson: 'Jan-Hendrik Voss', daysInStage: 15 },
+  { id: 'D-808', company: 'Synthex Automation GmbH', value: '€34.000', rawValue: 34000, stageId: 'demo', stage: '3. Produkt-Demo & Pitch', prob: '65%', rep: 'Julian K.', nextAction: 'Stakeholder-Präsentation Geschäftsführung', status: 'warm', month: 'Apr', source: 'AI SDR Outbound', contactPerson: 'Michael Kurz', daysInStage: 5 },
+  { id: 'D-809', company: 'GreenTech Energy Hub', value: '€47.500', rawValue: 47500, stageId: 'contacted', stage: '2. Qualifiziert & Erstkontakt', prob: '50%', rep: 'Elena B.', nextAction: 'Anforderungsanalyse & CRM-Check', status: 'active', month: 'Jun', source: 'LinkedIn Kampagnen', contactPerson: 'Laura Becker', daysInStage: 2 },
+  { id: 'D-810', company: 'Delta Medical Devices', value: '€73.000', rawValue: 73000, stageId: 'proposal', stage: '4. Angebot & Verhandlung', prob: '90%', rep: 'Sarah M.', nextAction: 'Vorstandspräsentation & Freigabe', status: 'hot', month: 'Jun', source: 'Empfehlungen', contactPerson: 'Prof. Hans Richter', daysInStage: 5 },
+  { id: 'D-811', company: 'Vanguard Logistics SE', value: '€95.000', rawValue: 95000, stageId: 'won', stage: '5. Abschluss (Closed Won)', prob: '100%', rep: 'Julian K.', nextAction: 'Kickoff-Workshop & SSO-Setup', status: 'closing', month: 'Apr', source: 'Google Ads Blitz', contactPerson: 'Corinna May', daysInStage: 14 },
+  { id: 'D-812', company: 'AeroDynamic Sensors GmbH', value: '€26.000', rawValue: 26000, stageId: 'inbound', stage: '1. Inbound Leads', prob: '30%', rep: 'Elena B.', nextAction: 'Auto-Routing an Vertriebsassistenz', status: 'active', month: 'Mai', source: 'Web-Formular', contactPerson: 'Dennis Wagner', daysInStage: 1 }
 ];
 
 // Custom Branded Tooltip for Sales Pipeline Funnel
@@ -642,6 +685,71 @@ export function CRMDashboard() {
     setModalData(getLeadSourcesForMonth(monthPayload));
     setIsModalOpen(true);
   };
+
+  // Interactive Drilldown Mode & Active Drilldown Filter State
+  const [isDrilldownMode, setIsDrilldownMode] = useState<boolean>(false);
+  const [activeDrilldown, setActiveDrilldown] = useState<DrilldownFilter | null>(null);
+
+  // Drilldown Action Handlers
+  const handleStageDrilldown = (stage: StageData) => {
+    setSelectedStage(stage);
+    setActiveDrilldown({
+      type: 'stage',
+      id: stage.id,
+      name: stage.stage,
+      shortLabel: stage.shortName,
+      color: stage.color,
+      badgeText: `Phase: ${stage.shortName}`,
+      subtitle: `${stage.leads} Leads • €${(stage.value / 1000).toFixed(0)}k Pipeline`
+    });
+  };
+
+  const handleMonthDrilldown = (monthPayload: any) => {
+    const month = monthPayload.month;
+    const rev = monthPayload.actual !== null && monthPayload.actual !== undefined ? monthPayload.actual : monthPayload.projected;
+    setActiveDrilldown({
+      type: 'month',
+      id: month,
+      name: `${month} 2026`,
+      shortLabel: month,
+      color: '#E56014',
+      badgeText: `Monat: ${month}`,
+      subtitle: `Prognose: €${(rev / 1000).toFixed(0)}k • Target: €${(monthPayload.target / 1000).toFixed(0)}k`
+    });
+  };
+
+  const handleRepDrilldown = (rep: string) => {
+    setActiveDrilldown({
+      type: 'rep',
+      id: rep,
+      name: `Sales Rep: ${rep}`,
+      shortLabel: rep,
+      color: '#23BAA4',
+      badgeText: `Rep: ${rep}`,
+      subtitle: `Gefilterte Performance & Deals`
+    });
+  };
+
+  const handleClearDrilldown = () => {
+    setActiveDrilldown(null);
+  };
+
+  // Dynamically Filtered Deals for Drilldown Mode
+  const filteredDeals = useMemo(() => {
+    if (!activeDrilldown) return sampleDeals;
+    if (activeDrilldown.type === 'stage') {
+      return sampleDeals.filter(
+        (deal) => deal.stageId === activeDrilldown.id || deal.stage.toLowerCase().includes(activeDrilldown.shortLabel.toLowerCase())
+      );
+    }
+    if (activeDrilldown.type === 'month') {
+      return sampleDeals.filter((deal) => deal.month === activeDrilldown.id);
+    }
+    if (activeDrilldown.type === 'rep') {
+      return sampleDeals.filter((deal) => deal.rep === activeDrilldown.id);
+    }
+    return sampleDeals;
+  }, [activeDrilldown]);
   
   // Export Modal & CSV State
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
@@ -784,6 +892,198 @@ export function CRMDashboard() {
     return (((totalProjectedAnnual - totalPreviousYearAnnual) / totalPreviousYearAnnual) * 100).toFixed(1);
   }, [totalProjectedAnnual, totalPreviousYearAnnual]);
 
+  // Top 4 High-Precision KPI Cards (Dynamically computed based on Active Drilldown)
+  const dynamicKpis = useMemo(() => {
+    if (!activeDrilldown) {
+      return [
+        {
+          title: 'End-to-End Win Rate',
+          icon: Target,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `${cumulativeWinRate}%`,
+          changePercent: timeRange === '12m' ? '+14.2%' : timeRange === '30d' ? '+3.4%' : '+5.2%',
+          comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
+          isPositive: true,
+          subtext: 'Branchenschnitt liegt bei 18%'
+        },
+        {
+          title: 'Aktive Pipeline',
+          icon: DollarSign,
+          iconColor: 'text-[#E56014]',
+          mainValue: `€${(totalPipelineValue / 1000).toLocaleString('de-DE', { maximumFractionDigits: 0 })}k`,
+          changePercent: timeRange === '12m' ? '+84.0%' : timeRange === '30d' ? '+19.4%' : '+28.4%',
+          comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
+          isPositive: true,
+          subtext: 'Gewichteter Pipeline-Gesamtwert'
+        },
+        {
+          title: 'Prognostizierter ARR',
+          icon: TrendingUp,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `€${(totalProjectedARR / 1000000).toFixed(2)}M`,
+          changePercent: timeRange === '12m' ? '+64.5%' : timeRange === '30d' ? '+12.6%' : '+18.7%',
+          comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
+          isPositive: true,
+          subtext: 'Jahres-Umsatzlaufzeit (Run-Rate)'
+        },
+        {
+          title: 'Vertriebs-Geschwindigkeit',
+          icon: Zap,
+          iconColor: 'text-[#E56014]',
+          mainValue: '14.5 T.',
+          changePercent: '-42.0%',
+          comparisonLabel: 'Zykluszeit vs. Vormonat',
+          isPositive: true,
+          subtext: 'Lead bis Abschluss (Vorher: 25 T.)'
+        }
+      ];
+    }
+
+    if (activeDrilldown.type === 'stage') {
+      const stage = calculatedStages.find((s) => s.id === activeDrilldown.id) || calculatedStages[0];
+      const avgDeal = stage.leads > 0 ? Math.round(stage.value / stage.leads) : 0;
+      return [
+        {
+          title: `Stufen-Conversion (${stage.shortName})`,
+          icon: Target,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `${stage.conversionRate}%`,
+          changePercent: `+${(stage.conversionRate * 0.08).toFixed(1)}%`,
+          comparisonLabel: 'vs. Benchmark',
+          isPositive: true,
+          subtext: `${stage.leads.toLocaleString('de-DE')} aktive Leads in dieser Stufe`
+        },
+        {
+          title: `Phasen-Pipeline`,
+          icon: DollarSign,
+          iconColor: 'text-[#E56014]',
+          mainValue: `€${(stage.value / 1000).toLocaleString('de-DE', { maximumFractionDigits: 0 })}k`,
+          changePercent: `+${(stage.conversionRate * 0.12).toFixed(1)}%`,
+          comparisonLabel: 'Segment-Volumen',
+          isPositive: true,
+          subtext: `${((stage.value / totalPipelineValue) * 100).toFixed(1)}% des gesamten Pipeline-Werts`
+        },
+        {
+          title: `Ø Deal-Wert (${stage.shortName})`,
+          icon: TrendingUp,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `€${avgDeal.toLocaleString('de-DE')}`,
+          changePercent: '+11.8%',
+          comparisonLabel: 'Ticket-Größe',
+          isPositive: true,
+          subtext: 'Durchschnittlicher Wert pro Lead'
+        },
+        {
+          title: `Verweildauer (${stage.shortName})`,
+          icon: Zap,
+          iconColor: 'text-[#E56014]',
+          mainValue: `${stage.avgDays} T.`,
+          changePercent: `-${(stage.dropOffRate * 0.6).toFixed(1)}%`,
+          comparisonLabel: 'SLA-Compliance',
+          isPositive: true,
+          subtext: `Drop-Off: ${stage.dropOffRate}% mit Speed-Routing`
+        }
+      ];
+    }
+
+    if (activeDrilldown.type === 'month') {
+      const monthData = dynamicProjections.find((m) => m.month === activeDrilldown.id) || dynamicProjections[5];
+      const rev = monthData.actual !== null && monthData.actual !== undefined ? monthData.actual : monthData.projected;
+      const targetPct = ((rev / monthData.target) * 100).toFixed(1);
+      const prevRev = monthData.previousYear ?? Math.round(rev * 0.65);
+      const yoyGrowth = prevRev > 0 ? (((rev - prevRev) / prevRev) * 100).toFixed(1) : '+18.5%';
+      return [
+        {
+          title: `Monatsumsatz (${monthData.month})`,
+          icon: DollarSign,
+          iconColor: 'text-[#E56014]',
+          mainValue: `€${(rev / 1000).toLocaleString('de-DE', { maximumFractionDigits: 0 })}k`,
+          changePercent: `+${yoyGrowth}%`,
+          comparisonLabel: 'vs. Vorjahr (YoY)',
+          isPositive: true,
+          subtext: monthData.actual ? 'Realisierter Ist-Umsatz' : 'KI-Prognostizierter Monat'
+        },
+        {
+          title: `Zielerreichung (${monthData.month})`,
+          icon: Target,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `${targetPct}%`,
+          changePercent: rev >= monthData.target ? `+${(((rev - monthData.target) / monthData.target) * 100).toFixed(1)}%` : `-${(((monthData.target - rev) / monthData.target) * 100).toFixed(1)}%`,
+          comparisonLabel: `Ziel: €${(monthData.target / 1000).toFixed(0)}k`,
+          isPositive: rev >= monthData.target,
+          subtext: `Budget-Ziel: €${(monthData.target / 1000).toLocaleString('de-DE')}k`
+        },
+        {
+          title: `Annualisierte Run-Rate`,
+          icon: TrendingUp,
+          iconColor: 'text-[#23BAA4]',
+          mainValue: `€${((rev * 12) / 1000000).toFixed(2)}M`,
+          changePercent: '+22.4%',
+          comparisonLabel: 'Hochrechnung',
+          isPositive: true,
+          subtext: `Basis: ${monthData.month} 2026 Umsatz`
+        },
+        {
+          title: `Optimistisches Limit`,
+          icon: Zap,
+          iconColor: 'text-[#E56014]',
+          mainValue: `€${(monthData.optimistic / 1000).toFixed(0)}k`,
+          changePercent: `+${(((monthData.optimistic - rev) / rev) * 100).toFixed(1)}%`,
+          comparisonLabel: 'Upside-Potenzial',
+          isPositive: true,
+          subtext: 'Bei voller LeadPilot-Ausschöpfung'
+        }
+      ];
+    }
+
+    // Rep filter
+    const repDeals = sampleDeals.filter((d) => d.rep === activeDrilldown.id);
+    const totalVal = repDeals.reduce((a, b) => a + b.rawValue, 0);
+    const avgProb = Math.round(repDeals.reduce((a, b) => a + parseInt(b.prob), 0) / (repDeals.length || 1));
+    return [
+      {
+        title: `Aktive Deals (${activeDrilldown.id})`,
+        icon: Target,
+        iconColor: 'text-[#23BAA4]',
+        mainValue: `${repDeals.length}`,
+        changePercent: '100%',
+        comparisonLabel: 'In Bearbeitung',
+        isPositive: true,
+        subtext: 'Zugeordnete Pipeline-Projekte'
+      },
+      {
+        title: `Deal-Gesamtwert`,
+        icon: DollarSign,
+        iconColor: 'text-[#E56014]',
+        mainValue: `€${(totalVal / 1000).toLocaleString('de-DE', { maximumFractionDigits: 0 })}k`,
+        changePercent: '+18.4%',
+        comparisonLabel: 'Persönliche Pipeline',
+        isPositive: true,
+        subtext: `Verwaltetes Dealvolumen`
+      },
+      {
+        title: `Ø Abschluss-Chance`,
+        icon: TrendingUp,
+        iconColor: 'text-[#23BAA4]',
+        mainValue: `${avgProb}%`,
+        changePercent: '+7.2%',
+        comparisonLabel: 'vs. Teamdurchschnitt',
+        isPositive: true,
+        subtext: 'Gewichtete Wahrscheinlichkeit'
+      },
+      {
+        title: `Aufgaben & Aktionen`,
+        icon: Zap,
+        iconColor: 'text-[#E56014]',
+        mainValue: `${repDeals.length} To-Dos`,
+        changePercent: '0 Überfällig',
+        comparisonLabel: 'SLA Status',
+        isPositive: true,
+        subtext: 'Alle Follow-ups im Zeitplan'
+      }
+    ];
+  }, [activeDrilldown, calculatedStages, dynamicProjections, cumulativeWinRate, timeRange, totalPipelineValue, totalProjectedARR]);
+
   // Export Data Payload for CSV & PDF generation
   const exportDataPayload: ExportReportData = useMemo(() => ({
     timeRange,
@@ -846,6 +1146,37 @@ export function CRMDashboard() {
               <span className="text-[11px] font-bold tracking-widest">
                 {isReloading ? 'Lädt Daten...' : 'Refresh'}
               </span>
+            </button>
+
+            {/* Interactive Drilldown Mode Toggle Button */}
+            <button
+              id="btn-toggle-drilldown-mode"
+              onClick={() => {
+                if (activeDrilldown) {
+                  setActiveDrilldown(null);
+                } else {
+                  setIsDrilldownMode(!isDrilldownMode);
+                }
+              }}
+              title={activeDrilldown ? "Drilldown-Filter aufheben" : isDrilldownMode ? "Drilldown-Modus deaktivieren" : "Drilldown-Modus aktivieren: Klicken Sie auf beliebige Chart-Segmente zum Isolieren"}
+              aria-label="Drilldown-Modus umschalten"
+              className={`flex items-center gap-2 px-3.5 py-2.5 border text-xs font-bold uppercase tracking-wider transition-all shadow-sm group cursor-pointer ${
+                activeDrilldown
+                  ? 'bg-[#E56014] border-[#E56014] text-white'
+                  : isDrilldownMode
+                  ? 'bg-[#E56014]/15 border-[#E56014]/50 text-[#E56014]'
+                  : 'bg-[#F9F8F6] border-[#1A1A1A]/10 text-[#1A1A1A]/70 hover:bg-[#1A1A1A] hover:text-white'
+              }`}
+            >
+              <Crosshair className={`w-4 h-4 transition-colors ${activeDrilldown ? 'text-white animate-spin' : isDrilldownMode ? 'text-[#E56014]' : 'text-[#1A1A1A]/60 group-hover:text-white'}`} style={{ animationDuration: '6s' }} />
+              <span className="text-[11px] font-bold tracking-widest uppercase">
+                {activeDrilldown ? `Drilldown: ${activeDrilldown.shortLabel}` : isDrilldownMode ? 'Drilldown: Aktiv' : 'Drilldown-Modus'}
+              </span>
+              <span
+                className={`w-2 h-2 rounded-full transition-all ${
+                  activeDrilldown || isDrilldownMode ? 'bg-[#E56014] shadow-[0_0_8px_#E56014]' : 'bg-[#1A1A1A]/20 group-hover:bg-white/40'
+                }`}
+              />
             </button>
 
             {/* Export Data Button (CSV & PDF Options) */}
@@ -1005,61 +1336,134 @@ export function CRMDashboard() {
           )}
         </AnimatePresence>
 
+        {/* Active Drilldown Segment Isolation Banner */}
+        <AnimatePresence>
+          {activeDrilldown && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              className="mb-8 overflow-hidden"
+            >
+              <div className="bg-[#141414] text-white p-4 sm:p-5 border-2 border-[#E56014] shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3.5">
+                  <div className="p-2.5 bg-[#E56014] text-white rounded-none shrink-0 shadow-sm">
+                    <Crosshair className="w-5 h-5 animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#E56014]">
+                        Aktive Segment-Drilldown Analyse
+                      </span>
+                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-white/10 text-white rounded-full">
+                        {activeDrilldown.type.toUpperCase()} FILTER
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-bold text-white mt-0.5 flex flex-wrap items-baseline gap-2">
+                      <span>{activeDrilldown.name}</span>
+                      {activeDrilldown.subtitle && (
+                        <span className="text-xs font-normal text-white/60 font-mono">
+                          ({activeDrilldown.subtitle})
+                        </span>
+                      )}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Quick Segment Switchers within active dimension */}
+                <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+                  {activeDrilldown.type === 'stage' && (
+                    <div className="flex items-center gap-1 bg-white/5 p-1 rounded border border-white/10 overflow-x-auto max-w-full">
+                      {calculatedStages.map((stg) => (
+                        <button
+                          key={stg.id}
+                          onClick={() => handleStageDrilldown(stg)}
+                          className={`px-2.5 py-1 text-[11px] font-bold rounded transition-all whitespace-nowrap cursor-pointer ${
+                            activeDrilldown.id === stg.id
+                              ? 'bg-[#E56014] text-white'
+                              : 'text-white/60 hover:text-white hover:bg-white/10'
+                          }`}
+                        >
+                          {stg.shortName}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeDrilldown.type === 'month' && (
+                    <div className="flex items-center gap-1 bg-white/5 p-1 rounded border border-white/10 overflow-x-auto max-w-full">
+                      {dynamicProjections.slice(0, 8).map((m) => (
+                        <button
+                          key={m.month}
+                          onClick={() => handleMonthDrilldown(m)}
+                          className={`px-2 py-1 text-[11px] font-mono font-bold rounded transition-all whitespace-nowrap cursor-pointer ${
+                            activeDrilldown.id === m.month
+                              ? 'bg-[#E56014] text-white'
+                              : 'text-white/60 hover:text-white hover:bg-white/10'
+                          }`}
+                        >
+                          {m.month}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Clear Drilldown Button */}
+                  <button
+                    onClick={handleClearDrilldown}
+                    className="flex items-center gap-1.5 px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-wider transition-colors border border-white/20 cursor-pointer"
+                    title="Drilldown-Filter aufheben und Gesamtdashboard anzeigen"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-[#E56014]" />
+                    <span>Filter aufheben</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Drilldown Mode Guide Banner (when mode is active but nothing selected) */}
+        {!activeDrilldown && isDrilldownMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-3 bg-[#E56014]/10 border border-[#E56014]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-[#E56014]"
+          >
+            <div className="flex items-center gap-2">
+              <Crosshair className="w-4 h-4 animate-spin shrink-0" style={{ animationDuration: '4s' }} />
+              <span className="font-bold whitespace-nowrap">
+                Drilldown-Modus aktiv:
+              </span>
+              <span className="text-[#1A1A1A]/80">
+                Klicken Sie auf beliebige Balken im Funnel, Monate im Forecast oder Deals, um das gesamte Dashboard auf dieses Segment zu isolieren.
+              </span>
+            </div>
+            <button
+              onClick={() => setIsDrilldownMode(false)}
+              className="text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A]/60 hover:text-[#1A1A1A] underline cursor-pointer self-end sm:self-auto"
+            >
+              Modus beenden
+            </button>
+          </motion.div>
+        )}
+
         {/* Top Highlight KPI Bar with Percentage Change Indicators */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-          {[
-            {
-              title: 'End-to-End Win Rate',
-              icon: Target,
-              iconColor: 'text-[#23BAA4]',
-              mainValue: `${cumulativeWinRate}%`,
-              changePercent: timeRange === '12m' ? '+14.2%' : timeRange === '30d' ? '+3.4%' : '+5.2%',
-              comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
-              isPositive: true,
-              subtext: 'Branchenschnitt liegt bei 18%'
-            },
-            {
-              title: 'Aktive Pipeline',
-              icon: DollarSign,
-              iconColor: 'text-[#E56014]',
-              mainValue: `€${(totalPipelineValue / 1000).toLocaleString('de-DE', { maximumFractionDigits: 0 })}k`,
-              changePercent: timeRange === '12m' ? '+84.0%' : timeRange === '30d' ? '+19.4%' : '+28.4%',
-              comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
-              isPositive: true,
-              subtext: 'Gewichteter Pipeline-Gesamtwert'
-            },
-            {
-              title: 'Prognostizierter ARR',
-              icon: TrendingUp,
-              iconColor: 'text-[#23BAA4]',
-              mainValue: `€${(totalProjectedARR / 1000000).toFixed(2)}M`,
-              changePercent: timeRange === '12m' ? '+64.5%' : timeRange === '30d' ? '+12.6%' : '+18.7%',
-              comparisonLabel: timeRange === '12m' ? 'vs. Vorjahr' : 'vs. Vormonat',
-              isPositive: true,
-              subtext: 'Jahres-Umsatzlaufzeit (Run-Rate)'
-            },
-            {
-              title: 'Vertriebs-Geschwindigkeit',
-              icon: Zap,
-              iconColor: 'text-[#E56014]',
-              mainValue: '14.5 T.',
-              changePercent: '-42.0%',
-              comparisonLabel: 'Zykluszeit vs. Vormonat',
-              isPositive: true, // Reduced cycle time is positive growth trend
-              subtext: 'Lead bis Abschluss (Vorher: 25 T.)'
-            }
-          ].map((kpi, idx) => (
+          {dynamicKpis.map((kpi, idx) => (
             <motion.div
-              key={`${kpi.title}-${refreshCount}`}
+              key={`${kpi.title}-${refreshCount}-${activeDrilldown?.id || 'all'}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: 'easeOut' }}
-              className="p-6 bg-[#F9F8F6] border border-[#1A1A1A]/10 flex flex-col justify-between relative overflow-hidden group hover:border-[#1A1A1A]/30 transition-all"
+              className={`p-6 bg-[#F9F8F6] border flex flex-col justify-between relative overflow-hidden group hover:border-[#1A1A1A]/30 transition-all ${
+                activeDrilldown ? 'border-[#E56014]/30 bg-[#FFFDFB]' : 'border-[#1A1A1A]/10'
+              }`}
             >
               <div className="flex items-center justify-between text-[#1A1A1A]/50 mb-3">
-                <span className="text-[10px] uppercase font-bold tracking-widest">{kpi.title}</span>
-                <kpi.icon className={`w-4 h-4 ${kpi.iconColor}`} />
+                <span className="text-[10px] uppercase font-bold tracking-widest truncate mr-1">{kpi.title}</span>
+                <kpi.icon className={`w-4 h-4 shrink-0 ${kpi.iconColor}`} />
               </div>
               <div>
                 <div className="text-3xl sm:text-4xl font-black tracking-tight text-[#1A1A1A] flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
@@ -1154,7 +1558,7 @@ export function CRMDashboard() {
               </div>
 
               {/* Recharts Funnel Representation with Entrance Animations */}
-              <div key={`funnel-wrapper-${timeRange}-${leadBoost}-${convBoost}-${refreshCount}-${showYoYComparison}-${showAnnotations}`} className="h-80 w-full">
+              <div key={`funnel-wrapper-${timeRange}-${leadBoost}-${convBoost}-${refreshCount}-${showYoYComparison}-${showAnnotations}-${activeDrilldown?.id || 'none'}`} className="h-80 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={calculatedStages}
@@ -1162,7 +1566,13 @@ export function CRMDashboard() {
                     onClick={(data: unknown) => {
                       const chartData = data as { activePayload?: { payload: StageData }[] } | null;
                       if (chartData?.activePayload && chartData.activePayload.length > 0) {
-                        handleOpenStageSources(chartData.activePayload[0].payload);
+                        const clickedStage = chartData.activePayload[0].payload;
+                        setSelectedStage(clickedStage);
+                        if (isDrilldownMode) {
+                          handleStageDrilldown(clickedStage);
+                        } else {
+                          handleOpenStageSources(clickedStage);
+                        }
                       }
                     }}
                   >
@@ -1204,20 +1614,33 @@ export function CRMDashboard() {
                       cursor="pointer"
                       onClick={(data: unknown) => {
                         const item = (data as { payload?: StageData })?.payload;
-                        if (item) handleOpenStageSources(item);
+                        if (item) {
+                          setSelectedStage(item);
+                          if (isDrilldownMode) {
+                            handleStageDrilldown(item);
+                          } else {
+                            handleOpenStageSources(item);
+                          }
+                        }
                       }}
                       isAnimationActive={true}
                       animationDuration={1300}
                       animationEasing="ease-out"
                       animationBegin={200}
                     >
-                      {calculatedStages.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={selectedStage.id === entry.id ? '#E56014' : entry.color}
-                          opacity={selectedStage.id === entry.id ? 1 : 0.85}
-                        />
-                      ))}
+                      {calculatedStages.map((entry, index) => {
+                        const isDrilldownTarget = activeDrilldown?.type === 'stage' && activeDrilldown.id === entry.id;
+                        const isSelected = selectedStage.id === entry.id;
+                        return (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={isDrilldownTarget ? '#E56014' : isSelected ? '#E56014' : entry.color}
+                            opacity={activeDrilldown?.type === 'stage' ? (isDrilldownTarget ? 1 : 0.4) : isSelected ? 1 : 0.85}
+                            stroke={isDrilldownTarget ? '#1A1A1A' : 'none'}
+                            strokeWidth={isDrilldownTarget ? 2 : 0}
+                          />
+                        );
+                      })}
                     </Bar>
 
                     {/* Static Annotations / Milestone References for Funnel */}
@@ -1261,30 +1684,45 @@ export function CRMDashboard() {
 
               {/* Step Transition Pills with percentage growth trends */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-6 pt-6 border-t border-[#1A1A1A]/10">
-                {calculatedStages.map((stg) => (
-                  <button
-                    key={stg.id}
-                    onClick={() => setSelectedStage(stg)}
-                    className={`p-3 text-left border transition-all ${
-                      selectedStage.id === stg.id
-                        ? 'border-[#E56014] bg-[#E56014]/5 shadow-sm'
-                        : 'border-[#1A1A1A]/10 bg-[#F9F8F6] hover:border-[#1A1A1A]/30'
-                    }`}
-                  >
-                    <div className="text-[10px] uppercase font-bold text-[#1A1A1A]/60 tracking-wider truncate">
-                      {stg.shortName}
-                    </div>
-                    <div className="text-lg font-black text-[#1A1A1A] mt-0.5">
-                      {stg.leads} <span className="text-[11px] font-normal text-[#1A1A1A]/50">Leads</span>
-                    </div>
-                    <div className="text-[10px] font-bold text-[#23BAA4] mt-1 flex items-center justify-between gap-1">
-                      <span>Conv: {stg.conversionRate}%</span>
-                      <span className="inline-flex items-center text-[9px] font-mono text-[#1a8575] bg-[#23BAA4]/15 px-1 py-0.5 rounded font-bold">
-                        <ArrowUpRight className="w-2.5 h-2.5 stroke-[2.5]" /> +{(stg.conversionRate * 0.12).toFixed(1)}%
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                {calculatedStages.map((stg) => {
+                  const isDrilldownTarget = activeDrilldown?.type === 'stage' && activeDrilldown.id === stg.id;
+                  return (
+                    <button
+                      key={stg.id}
+                      onClick={() => {
+                        setSelectedStage(stg);
+                        if (isDrilldownMode) {
+                          handleStageDrilldown(stg);
+                        }
+                      }}
+                      className={`p-3 text-left border transition-all cursor-pointer relative ${
+                        isDrilldownTarget
+                          ? 'border-[#E56014] bg-[#E56014]/15 shadow-sm ring-1 ring-[#E56014]'
+                          : selectedStage.id === stg.id
+                          ? 'border-[#E56014] bg-[#E56014]/5 shadow-sm'
+                          : 'border-[#1A1A1A]/10 bg-[#F9F8F6] hover:border-[#1A1A1A]/30'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] uppercase font-bold text-[#1A1A1A]/60 tracking-wider truncate">
+                          {stg.shortName}
+                        </div>
+                        {isDrilldownTarget && (
+                          <span className="w-2 h-2 rounded-full bg-[#E56014] animate-ping" />
+                        )}
+                      </div>
+                      <div className="text-lg font-black text-[#1A1A1A] mt-0.5">
+                        {stg.leads} <span className="text-[11px] font-normal text-[#1A1A1A]/50">Leads</span>
+                      </div>
+                      <div className="text-[10px] font-bold text-[#23BAA4] mt-1 flex items-center justify-between gap-1">
+                        <span>Conv: {stg.conversionRate}%</span>
+                        <span className="inline-flex items-center text-[9px] font-mono text-[#1a8575] bg-[#23BAA4]/15 px-1 py-0.5 rounded font-bold">
+                          <ArrowUpRight className="w-2.5 h-2.5 stroke-[2.5]" /> +{(stg.conversionRate * 0.12).toFixed(1)}%
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Funnel Milestone & Process Benchmark Context Ribbon */}
@@ -1404,13 +1842,27 @@ export function CRMDashboard() {
                     ))}
                   </div>
 
-                  <button
-                    onClick={() => handleOpenStageSources(selectedStage)}
-                    className="w-full mt-4 py-2.5 px-4 bg-[#E56014] hover:bg-[#c94f0d] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer group"
-                  >
-                    <Search className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                    <span>Quellen für {selectedStage.shortName} aufschlüsseln</span>
-                  </button>
+                  <div className="grid grid-cols-2 gap-2 mt-4">
+                    <button
+                      onClick={() => handleStageDrilldown(selectedStage)}
+                      className={`py-2.5 px-3 border text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                        activeDrilldown?.type === 'stage' && activeDrilldown.id === selectedStage.id
+                          ? 'bg-[#E56014] text-white border-[#E56014]'
+                          : 'bg-white/10 hover:bg-white/20 text-white border-white/20'
+                      }`}
+                      title={`Dashboard auf Stufe ${selectedStage.shortName} filtern`}
+                    >
+                      <Crosshair className="w-3.5 h-3.5 text-[#E56014]" />
+                      <span>{activeDrilldown?.type === 'stage' && activeDrilldown.id === selectedStage.id ? 'Isoliert' : 'Drilldown'}</span>
+                    </button>
+                    <button
+                      onClick={() => handleOpenStageSources(selectedStage)}
+                      className="py-2.5 px-3 bg-[#E56014] hover:bg-[#c94f0d] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer group"
+                    >
+                      <Search className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                      <span>Quellen</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1500,7 +1952,7 @@ export function CRMDashboard() {
               </div>
 
               {/* Recharts Composed Area & Line Chart with Entrance Animations */}
-              <div key={`forecast-wrapper-${timeRange}-${leadBoost}-${convBoost}-${dealSizeBoost}-${refreshCount}-${showYoYComparison}-${showAnnotations}`} className="h-80 w-full">
+              <div key={`forecast-wrapper-${timeRange}-${leadBoost}-${convBoost}-${dealSizeBoost}-${refreshCount}-${showYoYComparison}-${showAnnotations}-${activeDrilldown?.id || 'none'}`} className="h-80 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart
                     data={dynamicProjections}
@@ -1508,7 +1960,12 @@ export function CRMDashboard() {
                     onClick={(data: unknown) => {
                       const chartData = data as { activePayload?: { payload: any }[] } | null;
                       if (chartData?.activePayload && chartData.activePayload.length > 0) {
-                        handleOpenMonthSources(chartData.activePayload[0].payload);
+                        const monthPayload = chartData.activePayload[0].payload;
+                        if (isDrilldownMode) {
+                          handleMonthDrilldown(monthPayload);
+                        } else {
+                          handleOpenMonthSources(monthPayload);
+                        }
                       }
                     }}
                   >
@@ -1734,6 +2191,22 @@ export function CRMDashboard() {
                         onClick={() => setSelectedMilestone(chartMilestones.find(m => m.id === 'm-ai-sdr-launch') || null)}
                       />
                     )}
+
+                    {/* Active Drilldown Month Indicator */}
+                    {activeDrilldown?.type === 'month' && (
+                      <ReferenceLine
+                        x={activeDrilldown.id}
+                        stroke="#E56014"
+                        strokeWidth={2.5}
+                        label={{
+                          value: `Drilldown: ${activeDrilldown.id}`,
+                          position: 'insideTop',
+                          fill: '#E56014',
+                          fontSize: 11,
+                          fontWeight: 700
+                        }}
+                      />
+                    )}
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
@@ -1948,7 +2421,7 @@ export function CRMDashboard() {
         {/* Dynamic View Tab 3: Real-Time Active Deals */}
         {activeTab === 'deals' && (
           <motion.div
-            key={`tab-deals-${refreshCount}`}
+            key={`tab-deals-${refreshCount}-${activeDrilldown?.id || 'all'}`}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
@@ -1956,16 +2429,33 @@ export function CRMDashboard() {
           >
             <div className="p-6 sm:p-8 border-b border-[#1A1A1A]/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h3 className="text-xl font-bold tracking-tight text-[#1A1A1A]">
-                  Echtzeit Lead-Feed & Automatische Aufgaben
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xl font-bold tracking-tight text-[#1A1A1A]">
+                    Echtzeit Lead-Feed & Automatische Aufgaben
+                  </h3>
+                  {activeDrilldown && (
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#E56014]/10 text-[#E56014] font-bold font-mono">
+                      Gefiltert: {activeDrilldown.shortLabel}
+                    </span>
+                  )}
+                </div>
                 <p className="text-xs text-[#1A1A1A]/60 mt-1">
                   Jeder Lead im System besitzt einen lückenlos zugewiesenen nächsten Schritt.
                 </p>
               </div>
-              <span className="text-xs font-mono font-bold bg-[#F9F8F6] border border-[#1A1A1A]/10 px-3 py-1.5">
-                4 Deals mit Priorität 1
-              </span>
+              <div className="flex items-center gap-2">
+                {activeDrilldown && (
+                  <button
+                    onClick={handleClearDrilldown}
+                    className="text-xs font-bold text-[#E56014] bg-[#E56014]/10 hover:bg-[#E56014]/20 px-3 py-1.5 rounded transition-colors cursor-pointer"
+                  >
+                    Filter zurücksetzen
+                  </button>
+                )}
+                <span className="text-xs font-mono font-bold bg-[#F9F8F6] border border-[#1A1A1A]/10 px-3 py-1.5">
+                  {filteredDeals.length} Deals aktiv
+                </span>
+              </div>
             </div>
 
             <div className="overflow-x-auto">
@@ -1981,42 +2471,69 @@ export function CRMDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#1A1A1A]/10">
-                  {sampleDeals.map((deal) => (
-                    <tr key={deal.id} className="hover:bg-[#F9F8F6] transition-colors">
-                      <td className="py-5 px-6 font-bold text-[#1A1A1A]">
-                        <span className="text-[10px] font-mono text-[#1A1A1A]/40 block">{deal.id}</span>
-                        {deal.company}
-                      </td>
-                      <td className="py-5 px-6 font-black font-mono text-sm text-[#E56014]">
-                        {deal.value}
-                      </td>
-                      <td className="py-5 px-6">
-                        <span className="inline-flex items-center px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-[#1A1A1A]/5 text-[#1A1A1A]">
-                          {deal.stage}
-                        </span>
-                      </td>
-                      <td className="py-5 px-6">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-[#23BAA4]">{deal.prob}</span>
-                          <div className="w-16 h-1.5 bg-[#1A1A1A]/10 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-[#23BAA4]"
-                              style={{ width: deal.prob }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-5 px-6">
-                        <div className="flex items-center gap-2 text-[#1A1A1A] font-medium">
-                          <span className="w-2 h-2 rounded-full bg-[#E56014] shrink-0"></span>
-                          {deal.nextAction}
-                        </div>
-                      </td>
-                      <td className="py-5 px-6 font-semibold text-[#1A1A1A]/70">
-                        {deal.rep}
+                  {filteredDeals.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="py-12 text-center text-[#1A1A1A]/50">
+                        Keine Deals im gewählten Drilldown-Filter vorhanden.
+                        <button
+                          onClick={handleClearDrilldown}
+                          className="ml-2 text-[#E56014] underline font-bold cursor-pointer"
+                        >
+                          Filter aufheben
+                        </button>
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    filteredDeals.map((deal) => (
+                      <tr key={deal.id} className="hover:bg-[#F9F8F6] transition-colors">
+                        <td className="py-5 px-6 font-bold text-[#1A1A1A]">
+                          <span className="text-[10px] font-mono text-[#1A1A1A]/40 block">{deal.id}</span>
+                          {deal.company}
+                        </td>
+                        <td className="py-5 px-6 font-black font-mono text-sm text-[#E56014]">
+                          {deal.value}
+                        </td>
+                        <td className="py-5 px-6">
+                          <button
+                            onClick={() => {
+                              const matchingStage = calculatedStages.find(s => s.id === deal.stageId);
+                              if (matchingStage) handleStageDrilldown(matchingStage);
+                            }}
+                            title="Nach dieser Phase filtern"
+                            className="inline-flex items-center px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-[#1A1A1A]/5 hover:bg-[#E56014]/10 hover:text-[#E56014] text-[#1A1A1A] transition-colors cursor-pointer rounded-xs"
+                          >
+                            {deal.stage}
+                          </button>
+                        </td>
+                        <td className="py-5 px-6">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-[#23BAA4]">{deal.prob}</span>
+                            <div className="w-16 h-1.5 bg-[#1A1A1A]/10 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-[#23BAA4]"
+                                style={{ width: deal.prob }}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-5 px-6">
+                          <div className="flex items-center gap-2 text-[#1A1A1A] font-medium">
+                            <span className="w-2 h-2 rounded-full bg-[#E56014] shrink-0"></span>
+                            {deal.nextAction}
+                          </div>
+                        </td>
+                        <td className="py-5 px-6">
+                          <button
+                            onClick={() => handleRepDrilldown(deal.rep)}
+                            title={`Nach ${deal.rep} filtern`}
+                            className="font-semibold text-[#1A1A1A]/70 hover:text-[#E56014] transition-colors cursor-pointer text-left"
+                          >
+                            {deal.rep}
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
