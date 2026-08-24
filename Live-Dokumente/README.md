@@ -53,6 +53,9 @@ LeadPilot/
 │       ├── LeadPilot \- UI-System.md  
 │       └── ...  
 │  
+├── LeadPilot \- Unternehmensdaten:Projekt Kontext/  
+│   └── 34 Dateien, flach (Rechtliches & Gesellschaft, Finanzen, Vertrieb & Marketing, Sonstiges/Vorlagen)  
+│  
 ├── LeadPilot-Designsystem/  
 │   ├── assets/  
 │   ├── components/  
@@ -63,6 +66,16 @@ LeadPilot/
 │   ├── styles.css  
 │   └── README.md  
 │  
+├── Live-Dokumente/  
+│   ├── README.md  
+│   └── LeadPilot\_Repo\_Struktur.drawio  
+│  
+├── Marketing/  
+│   ├── Kampagnen & Leitfäden  
+│   ├── Präsentationen  
+│   ├── Roadmap  
+│   └── Landingpages & Dashboards  
+│  
 ├── new\_marketing\_assets\_dashboard/  
 │   ├── LinkedIn-Assets  
 │   ├── E-Mail-Assets  
@@ -71,9 +84,9 @@ LeadPilot/
 │   ├── Content-Materialien  
 │   └── ...  
 │  
-├── Praxisbeispiel\_ Einfaches Scoring-Modell Kopie.md  
+├── LeadPilot\_Unternehmens\_Dashboard.html  
 │  
-└── README.md
+└── Praxisbeispiel\_ Einfaches Scoring-Modell Kopie.md
 
 Die Struktur kann sich laufend verändern. Neue Inhalte, Assets und Konzepte werden fortlaufend ergänzt, verschoben oder überarbeitet.
 
