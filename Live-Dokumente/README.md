@@ -53,7 +53,7 @@ LeadPilot/
 │       ├── LeadPilot \- UI-System.md  
 │       └── ...  
 │  
-├── LeadPilot \- Unternehmensdaten:Projekt Kontext/  
+├── LeadPilot \- Unternehmensdaten-Projekt Kontext/  
 │   └── 34 Dateien, flach (Rechtliches & Gesellschaft, Finanzen, Vertrieb & Marketing, Sonstiges/Vorlagen)  
 │  
 ├── LeadPilot-Designsystem/  
