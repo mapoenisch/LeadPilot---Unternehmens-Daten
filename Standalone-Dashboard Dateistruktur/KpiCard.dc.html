@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/styles.css">
+  <script src="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/_ds_bundle.js"></script>
+</helmet>
+<x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Card" featured="{{ highlight }}" style="height:100%;box-sizing:border-box" hint-size="100%,140px">
+  <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--font-body)">
+    <div style="font-size:var(--text-tiny);font-weight:var(--weight-medium);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:var(--tracking-caps)">{{ label }}</div>
+    <div style="display:flex;align-items:baseline;gap:6px">
+      <span style="font-family:var(--font-display);font-size:28px;font-weight:var(--weight-semibold);color:var(--color-text);letter-spacing:var(--tracking-tight)">{{ value }}</span>
+      <sc-if value="{{ hasUnit }}"><span style="font-size:var(--text-small);color:var(--color-text-muted)">{{ unit }}</span></sc-if>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:var(--text-small)">
+      <sc-if value="{{ hasDelta }}"><span style="color:{{ deltaColor }};font-weight:var(--weight-semibold)">{{ delta }}</span></sc-if>
+      <sc-if value="{{ hasNote }}"><span style="color:var(--color-text-muted)">{{ note }}</span></sc-if>
+    </div>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:260,&quot;height&quot;:140},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ARR zum 31.12.2025&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;411,8&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;unit&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tsd. €&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;delta&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;▲ +98 %&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;deltaDir&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;up&quot;,&quot;down&quot;,&quot;neutral&quot;],&quot;default&quot;:&quot;up&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;note&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ggü. 207,8 Tsd. €&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;highlight&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const dir = this.props.deltaDir ?? null;
+    const deltaColor = dir === 'up' ? 'var(--color-success)' : dir === 'down' ? 'var(--color-error)' : 'var(--color-text-muted)';
+    return {
+      label: this.props.label ?? '',
+      value: this.props.value ?? '',
+      unit: this.props.unit ?? '',
+      hasUnit: !!(this.props.unit),
+      delta: this.props.delta ?? '',
+      hasDelta: !!(this.props.delta),
+      note: this.props.note ?? '',
+      hasNote: !!(this.props.note),
+      deltaColor,
+      highlight: !!this.props.highlight,
+    };
+  }
+}
+</script>
+</body>
+</html>

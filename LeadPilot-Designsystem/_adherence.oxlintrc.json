@@ -42,8 +42,8 @@
         "message": "Raw px value — use a design-system spacing token via var()."
       },
       {
-        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Space Grotesk|Inter|JetBrains Mono))/i]",
-        "message": "Font not provided by the design system. Available: Space Grotesk, Inter, JetBrains Mono."
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:LeadPilot Grotesk|Inter|JetBrains Mono))/i]",
+        "message": "Font not provided by the design system. Available: LeadPilot Grotesk, Inter, JetBrains Mono."
       },
       {
         "selector": "JSXOpeningElement[name.name='Alert'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|title|children|onDismiss|key|ref|className|style|children)$/]",
@@ -358,7 +358,7 @@
     "fontFamilies": [
       "Inter",
       "JetBrains Mono",
-      "Space Grotesk"
+      "LeadPilot Grotesk"
     ]
   }
 }

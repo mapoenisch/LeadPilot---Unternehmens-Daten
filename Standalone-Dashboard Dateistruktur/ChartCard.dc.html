@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/styles.css">
+  <script src="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/_ds_bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</helmet>
+<x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Card" padding="var(--space-4)" style="height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:12px" hint-size="100%,320px">
+  <div>
+    <div style="font-family:var(--font-body);font-size:var(--text-small);font-weight:var(--weight-semibold);color:var(--color-text)">{{ title }}</div>
+    <sc-if value="{{ hasSubtitle }}"><div style="font-family:var(--font-body);font-size:var(--text-tiny);color:var(--color-text-muted);margin-top:2px">{{ subtitle }}</div></sc-if>
+  </div>
+  <div style="position:relative;flex:1;min-height:220px">
+    <canvas ref="{{ canvasRef }}"></canvas>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:320}}">
+class Component extends DCLogic {
+  canvasRef = React.createRef();
+  chart = null;
+
+  componentDidMount() {
+    this.waitAndBuild();
+  }
+  componentDidUpdate() {
+    this.waitAndBuild();
+  }
+  componentWillUnmount() {
+    if (this.chart) this.chart.destroy();
+    if (this.pollTimer) clearTimeout(this.pollTimer);
+  }
+
+  waitAndBuild() {
+    if (window.Chart) { this.build(); return; }
+    if (this.pollTimer) clearTimeout(this.pollTimer);
+    this.pollTimer = setTimeout(() => this.waitAndBuild(), 60);
+  }
+
+  build() {
+    if (!window.Chart || !this.canvasRef.current) return;
+    if (this.chart) { this.chart.destroy(); this.chart = null; }
+    const type = this.props.type ?? 'line';
+    const labels = this.props.labels ?? [];
+    const datasets = this.props.datasets ?? [];
+    const muted = '#A7B0BA';
+    const grid = 'rgba(167,176,186,.14)';
+    Chart.defaults.font.family = "'Inter','Segoe UI',-apple-system,sans-serif";
+    Chart.defaults.color = muted;
+    Chart.defaults.maintainAspectRatio = false;
+    const eur = v => new Intl.NumberFormat('de-DE').format(v) + ' €';
+
+    let cfg;
+    if (type === 'doughnut') {
+      const ds = datasets[0] ?? { data: [] };
+      cfg = {
+        type: 'doughnut',
+        data: { labels, datasets: [{ data: ds.data, backgroundColor: ds.colors ?? ['#00D9C6'], borderWidth: 3, borderColor: '#123330', hoverOffset: 6 }] },
+        options: {
+          cutout: '58%',
+          plugins: {
+            legend: { position: 'right', labels: { color: muted, boxWidth: 10, padding: 10 } },
+            tooltip: { callbacks: { label: c => c.label + ': ' + eur(c.parsed) } },
+          },
+        },
+      };
+    } else {
+      cfg = {
+        type,
+        data: {
+          labels,
+          datasets: datasets.map((ds, i) => {
+            const base = {
+              label: ds.label,
+              data: ds.data,
+              borderRadius: type === 'bar' ? 5 : undefined,
+              maxBarThickness: 32,
+              borderWidth: type === 'line' ? 2.5 : 0,
+              tension: 0.34,
+              fill: !!ds.fill,
+              backgroundColor: ds.colors ? ds.colors : (ds.fill ? this.hexToRgba(ds.color, 0.14) : ds.color),
+              borderColor: ds.colors ? ds.colors : ds.color,
+              pointBackgroundColor: '#123330',
+              pointBorderColor: ds.color,
+              pointBorderWidth: 2.5,
+              pointRadius: type === 'line' ? 4 : 0,
+            };
+            if (type === 'bar' && ds.highlightLastColor) {
+              base.backgroundColor = (ctx) => ctx.dataIndex === ds.data.length - 1 ? ds.highlightLastColor : ds.color;
+            }
+            return base;
+          }),
+        },
+        options: {
+          plugins: {
+            legend: { display: datasets.length > 1, position: 'bottom', labels: { color: muted, boxWidth: 10, padding: 10 } },
+            tooltip: { callbacks: { label: c => (c.dataset.label ? c.dataset.label + ': ' : '') + eur(c.parsed.y) } },
+          },
+          scales: {
+            y: { grid: { color: grid, drawTicks: false }, border: { display: false }, ticks: { color: muted, callback: v => (Math.abs(v) >= 1000 ? (v / 1000) + 'k' : v) } },
+            x: { grid: { display: false }, border: { color: 'rgba(167,176,186,.25)' }, ticks: { color: muted } },
+          },
+        },
+      };
+    }
+    this.chart = new Chart(this.canvasRef.current, cfg);
+  }
+
+  hexToRgba(hex, a) {
+    const h = (hex || '#00D9C6').replace('#', '');
+    const r = parseInt(h.substring(0, 2), 16), g = parseInt(h.substring(2, 4), 16), b = parseInt(h.substring(4, 6), 16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  renderVals() {
+    return {
+      title: this.props.title ?? '',
+      subtitle: this.props.subtitle ?? '',
+      hasSubtitle: !!this.props.subtitle,
+      canvasRef: this.canvasRef,
+    };
+  }
+}
+</script>
+</body>
+</html>

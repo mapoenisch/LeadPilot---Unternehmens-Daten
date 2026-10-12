@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"LeadPilotDesignSystem_8c9681","components":[{"name":"Divider","sourcePath":"components/content/Divider.jsx"},{"name":"Link","sourcePath":"components/content/Link.jsx"},{"name":"Table","sourcePath":"components/data/Table.jsx"},{"name":"Alert","sourcePath":"components/feedback/Alert.jsx"},{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"NavItem","sourcePath":"components/navigation/NavItem.jsx"},{"name":"SectionHeader","sourcePath":"components/navigation/SectionHeader.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"},{"name":"Card","sourcePath":"components/surfaces/Card.jsx"},{"name":"Modal","sourcePath":"components/surfaces/Modal.jsx"},{"name":"Icon","sourcePath":"components/utility/Icon.jsx"},{"name":"ICON_NAMES","sourcePath":"components/utility/Icon.jsx"}],"sourceHashes":{"components/content/Divider.jsx":"4171ee87b551","components/content/Link.jsx":"963059d90827","components/data/Table.jsx":"5658628003c9","components/feedback/Alert.jsx":"5f155a058087","components/feedback/Badge.jsx":"6f049bda1061","components/forms/Button.jsx":"9d9c02e3326b","components/forms/Input.jsx":"c4e21091bdda","components/navigation/NavItem.jsx":"9fc4cd0080b7","components/navigation/SectionHeader.jsx":"697f0e051e3d","components/navigation/Tabs.jsx":"e27f7cd2d2ee","components/surfaces/Card.jsx":"9981c3089f80","components/surfaces/Modal.jsx":"3201f481e8c2","components/utility/Icon.jsx":"4e177a58f53a","ui_kits/dashboard/LeadsView.jsx":"3baf53ab896a","ui_kits/dashboard/OverviewView.jsx":"fbfbe64a5956","ui_kits/dashboard/SequencesView.jsx":"9518448a7e5b","ui_kits/dashboard/SettingsView.jsx":"9c7881febcf1","ui_kits/dashboard/Sidebar.jsx":"9270b1f4b37a","ui_kits/marketing/CTASection.jsx":"4c30b30f4a8e","ui_kits/marketing/FeatureGrid.jsx":"1928d598d1a4","ui_kits/marketing/Hero.jsx":"8f4afebd68c1","ui_kits/marketing/MarketingHeader.jsx":"91708cef55d5"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"LeadPilotDesignSystem_8c9681","components":[{"name":"Divider","sourcePath":"components/content/Divider.jsx"},{"name":"Link","sourcePath":"components/content/Link.jsx"},{"name":"Table","sourcePath":"components/data/Table.jsx"},{"name":"Alert","sourcePath":"components/feedback/Alert.jsx"},{"name":"Badge","sourcePath":"components/feedback/Badge.jsx"},{"name":"Button","sourcePath":"components/forms/Button.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"NavItem","sourcePath":"components/navigation/NavItem.jsx"},{"name":"SectionHeader","sourcePath":"components/navigation/SectionHeader.jsx"},{"name":"Tabs","sourcePath":"components/navigation/Tabs.jsx"},{"name":"Card","sourcePath":"components/surfaces/Card.jsx"},{"name":"Modal","sourcePath":"components/surfaces/Modal.jsx"},{"name":"Icon","sourcePath":"components/utility/Icon.jsx"},{"name":"ICON_NAMES","sourcePath":"components/utility/Icon.jsx"}],"sourceHashes":{"components/content/Divider.jsx":"4171ee87b551","components/content/Link.jsx":"963059d90827","components/data/Table.jsx":"5658628003c9","components/feedback/Alert.jsx":"5f155a058087","components/feedback/Badge.jsx":"6f049bda1061","components/forms/Button.jsx":"9d9c02e3326b","components/forms/Input.jsx":"c4e21091bdda","components/navigation/NavItem.jsx":"9fc4cd0080b7","components/navigation/SectionHeader.jsx":"697f0e051e3d","components/navigation/Tabs.jsx":"e27f7cd2d2ee","components/surfaces/Card.jsx":"9981c3089f80","components/surfaces/Modal.jsx":"3201f481e8c2","components/utility/Icon.jsx":"4e177a58f53a","ui_kits/dashboard/LeadsView.jsx":"3baf53ab896a","ui_kits/dashboard/OverviewView.jsx":"fbfbe64a5956","ui_kits/dashboard/SequencesView.jsx":"9518448a7e5b","ui_kits/dashboard/SettingsView.jsx":"9c7881febcf1","ui_kits/dashboard/Sidebar.jsx":"2eae3d17642b","ui_kits/marketing/CTASection.jsx":"4c30b30f4a8e","ui_kits/marketing/FeatureGrid.jsx":"1928d598d1a4","ui_kits/marketing/Hero.jsx":"8f4afebd68c1","ui_kits/marketing/MarketingHeader.jsx":"109ffc83c7f7"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -1119,7 +1119,7 @@ function Sidebar({
       gap: 'var(--space-6)'
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "../../assets/logo/leadpilot-logo-full.png",
+    src: window.__resources && window.__resources.logoFull || "../../assets/logo/leadpilot-logo-full.png",
     alt: "LeadPilot",
     style: {
       height: '26px',
@@ -1328,7 +1328,8 @@ window.Hero = Hero;
 // ui_kits/marketing/MarketingHeader.jsx
 try { (() => {
 function MarketingHeader({
-  onCta
+  onCta,
+  logoSrc = "../../assets/logo/leadpilot-logo-full.png"
 }) {
   return /*#__PURE__*/React.createElement("header", {
     style: {
@@ -1338,7 +1339,7 @@ function MarketingHeader({
       padding: '20px 48px'
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "../../assets/logo/leadpilot-logo-full.png",
+    src: window.__resources && window.__resources.logoFull || logoSrc,
     alt: "LeadPilot",
     style: {
       height: '32px',

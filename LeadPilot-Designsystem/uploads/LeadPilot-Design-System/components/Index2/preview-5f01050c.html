@@ -1,0 +1,32 @@
+<!-- @dsCard group="Marketing Site" height=640 subtitle="Hero, feature grid, CTA — dark cyan/orange" page -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LeadPilot — Marketing site</title>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>body{margin:0}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="./MarketingHeader.jsx"></script>
+<script type="text/babel" src="./Hero.jsx"></script>
+<script type="text/babel" src="./FeatureGrid.jsx"></script>
+<script type="text/babel" src="./CTASection.jsx"></script>
+<script type="text/babel">
+const { Button, Badge, Card, Icon } = window.LeadPilotDesignSystem_8c9681;
+function App(){
+  return (
+    <div style={{background:'var(--color-bg)',minHeight:'100vh'}}>
+      <MarketingHeader onCta={<Button variant="primary" size="sm">Get started</Button>} />
+      <Hero Button={Button} Badge={Badge} />
+      <FeatureGrid Card={Card} Icon={Icon} />
+      <CTASection Button={Button} />
+      <MarketingFooter />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

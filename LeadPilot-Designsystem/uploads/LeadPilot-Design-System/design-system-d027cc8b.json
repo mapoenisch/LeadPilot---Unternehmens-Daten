@@ -1,0 +1,234 @@
+{
+  "v": 3,
+  "assetGroups": {
+    "Logos": {
+      "files": {
+        "leadpilot-logo-dark-bg.jpg": {
+          "blob": "a7ce7cbb6302e3bbdc6ef9d1f006b3b4",
+          "name": "leadpilot-logo-dark-bg.jpg",
+          "sha256": "48f9cc8e2e615e093730efb66a233a13740a6629ead4921d088a477323254811",
+          "size": 406145,
+          "type": "image/jpeg"
+        },
+        "leadpilot-logo-full.png": {
+          "blob": "4ddbbef4e635bf625293d643c37abd7a",
+          "name": "leadpilot-logo-full.png",
+          "sha256": "7019b53ead3941bed1263474e6f0de5f03dec84276eeb9da3dc106e007e06491",
+          "size": 667597,
+          "type": "image/png"
+        },
+        "leadpilot-mark.png": {
+          "blob": "e92a7be3d035e337a014c3b85aa938f0",
+          "name": "leadpilot-mark.png",
+          "sha256": "71b1f7b7efe219e0f6613d45f7ad9f98f7d7f9ecdbc8da661258849e51136362",
+          "size": 289205,
+          "type": "image/png"
+        },
+        "rocket-orbit-v1.png": {
+          "blob": "558f64873af498168152ed6a2fe09966",
+          "name": "rocket-orbit-v1.png",
+          "sha256": "068ec3cb7e0bd9b194387deb0b4cdfb518c0116a25bfbc97305b6968d868f5d8",
+          "size": 959087,
+          "type": "image/png"
+        },
+        "rocket-orbit-v4.png": {
+          "blob": "86d579362de96865165085a6bf388cdf",
+          "name": "rocket-orbit-v4.png",
+          "sha256": "6c3a7a9eb1ac8a5a3c74322f47f2bb0a712de949e5e0777e2e8ba342dd4e5960",
+          "size": 1187363,
+          "type": "image/png"
+        },
+        "leadpilot-wordmark.svg": {
+          "blob": "de8c681a085a95b4c2777e459e9c7700",
+          "name": "leadpilot-wordmark.svg",
+          "sha256": "222973177febaf557e99ce1139691f27213f0425bae10f36d74fbf3eb00dbd0a",
+          "size": 2910,
+          "type": "image/svg+xml"
+        }
+      },
+      "name": "Logos",
+      "order": []
+    },
+    "Uploads": {
+      "files": {
+        "2026-08-11_10-58-42.png": {
+          "blob": "d9c424eeda1562bef3095ddbf06b8cfa",
+          "name": "2026-08-11_10-58-42.png",
+          "sha256": "7651fa999c766a60d46a86df247fd8cd2a1528b847915e63f55bd57423d11176",
+          "size": 515268,
+          "type": "image/png"
+        },
+        "LeadPilot~20-~20Logo~28final2~29.jpg": {
+          "blob": "a7ce7cbb6302e3bbdc6ef9d1f006b3b4",
+          "name": "LeadPilot - Logo(final2).jpg",
+          "sha256": "48f9cc8e2e615e093730efb66a233a13740a6629ead4921d088a477323254811",
+          "size": 406145,
+          "type": "image/jpeg"
+        },
+        "LeadPilot~20-~20Logo~28final3~29.png": {
+          "blob": "2dbd8d137de6efdc1e20268a98fc9464",
+          "name": "LeadPilot - Logo(final3).png",
+          "sha256": "3a0d62b10e9e1cfba4210337738cae16fb265ce57d0eda35320720dc363caba1",
+          "size": 798036,
+          "type": "image/png"
+        },
+        "LeadPilot~20-~20Logo~28final~29.png": {
+          "blob": "4ddbbef4e635bf625293d643c37abd7a",
+          "name": "LeadPilot - Logo(final).png",
+          "sha256": "7019b53ead3941bed1263474e6f0de5f03dec84276eeb9da3dc106e007e06491",
+          "size": 667597,
+          "type": "image/png"
+        },
+        "LeadPilot~20-~20Variations~281~29.png": {
+          "blob": "99451650fa18a96a75cc418d755d3947",
+          "name": "LeadPilot - Variations(1).png",
+          "sha256": "6ea1257d27e0196620c577f0c0354c6bdb53b0abe9f29789e78b36c90446778c",
+          "size": 6930782,
+          "type": "image/png"
+        },
+        "LeadPilot~20-~20Variations~282~29.png": {
+          "blob": "7341ee374af7e520080f2c40c474764a",
+          "name": "LeadPilot - Variations(2).png",
+          "sha256": "6b8351533df2fe42c228a1cb3d1a2e6c9c74133ee585b7322c75c3392c3c3af4",
+          "size": 6201610,
+          "type": "image/png"
+        },
+        "Logovariation1.png": {
+          "blob": "558f64873af498168152ed6a2fe09966",
+          "name": "Logovariation1.png",
+          "sha256": "068ec3cb7e0bd9b194387deb0b4cdfb518c0116a25bfbc97305b6968d868f5d8",
+          "size": 959087,
+          "type": "image/png"
+        },
+        "Logovariation2.png": {
+          "blob": "9089acf320fcc30adc3058bcfdb49bc7",
+          "name": "Logovariation2.png",
+          "sha256": "982c4cd9eba8b9aeb8e26c301795319e56dc7558582e99ca385b9e6f1140075c",
+          "size": 913120,
+          "type": "image/png"
+        },
+        "Logovariation3.png": {
+          "blob": "84b58f3c179a75fbcc9bda41c594b337",
+          "name": "Logovariation3.png",
+          "sha256": "fb963c8aaa04408eb06abac7ecc5b154e9aa75de1c9e2659e044bda0faef1046",
+          "size": 962636,
+          "type": "image/png"
+        },
+        "Logovariation4.png": {
+          "blob": "86d579362de96865165085a6bf388cdf",
+          "name": "Logovariation4.png",
+          "sha256": "6c3a7a9eb1ac8a5a3c74322f47f2bb0a712de949e5e0777e2e8ba342dd4e5960",
+          "size": 1187363,
+          "type": "image/png"
+        },
+        "pasted-1786438766262-0.png": {
+          "blob": "dca00cb16be43bda80edf944b4e9d291",
+          "name": "pasted-1786438766262-0.png",
+          "sha256": "c6efc5266c599f0a485a78f08235835e6497a1473779171f657f43e49f97adc6",
+          "size": 480694,
+          "type": "image/png"
+        }
+      },
+      "name": "Uploads",
+      "order": []
+    },
+    "brand": {
+      "files": {
+        "mockup-board-1.png": {
+          "blob": "99451650fa18a96a75cc418d755d3947",
+          "name": "mockup-board-1.png",
+          "sha256": "6ea1257d27e0196620c577f0c0354c6bdb53b0abe9f29789e78b36c90446778c",
+          "size": 6930782,
+          "type": "image/png"
+        },
+        "mockup-board-2.png": {
+          "blob": "7341ee374af7e520080f2c40c474764a",
+          "name": "mockup-board-2.png",
+          "sha256": "6b8351533df2fe42c228a1cb3d1a2e6c9c74133ee585b7322c75c3392c3c3af4",
+          "size": 6201610,
+          "type": "image/png"
+        }
+      },
+      "name": "brand",
+      "order": []
+    },
+    "logo": {
+      "files": {
+        "explorations/rocket-orbit-v2.png": {
+          "blob": "9089acf320fcc30adc3058bcfdb49bc7",
+          "name": "explorations/rocket-orbit-v2.png",
+          "sha256": "982c4cd9eba8b9aeb8e26c301795319e56dc7558582e99ca385b9e6f1140075c",
+          "size": 913120,
+          "type": "image/png"
+        },
+        "explorations/rocket-orbit-v3.png": {
+          "blob": "84b58f3c179a75fbcc9bda41c594b337",
+          "name": "explorations/rocket-orbit-v3.png",
+          "sha256": "fb963c8aaa04408eb06abac7ecc5b154e9aa75de1c9e2659e044bda0faef1046",
+          "size": 962636,
+          "type": "image/png"
+        },
+        "leadpilot-logo-square.png": {
+          "blob": "2dbd8d137de6efdc1e20268a98fc9464",
+          "name": "leadpilot-logo-square.png",
+          "sha256": "3a0d62b10e9e1cfba4210337738cae16fb265ce57d0eda35320720dc363caba1",
+          "size": 798036,
+          "type": "image/png"
+        }
+      },
+      "name": "logo",
+      "order": []
+    },
+    "notes": {
+      "files": {},
+      "name": "notes",
+      "order": []
+    }
+  },
+  "blobs": {},
+  "createdOnFiles": {
+    "at": "2026-09-18T11:41:52.761Z",
+    "v": 1
+  },
+  "docs": {
+    "readme": "project/README.md",
+    "sections": [
+      "project/ui_kits/dashboard/README.md",
+      "project/ui_kits/marketing/README.md",
+      "project/uploads/LeadPilot - Color-System.md",
+      "project/uploads/LeadPilot - Mini-Design.md",
+      "project/uploads/LeadPilot - UI-System.md"
+    ]
+  },
+  "groups": [
+    "Logos",
+    "Uploads",
+    "brand",
+    "logo",
+    "notes"
+  ],
+  "layout": "files",
+  "libraries": [
+    {
+      "file": "components/lib/react.production.min.js",
+      "global": "React",
+      "name": "react",
+      "version": "18.3.1"
+    },
+    {
+      "file": "components/lib/react-dom.production.min.js",
+      "global": "ReactDOM",
+      "name": "react-dom",
+      "version": "18.3.1"
+    }
+  ],
+  "namespace": "LeadPilotDesignSystem_8c9681",
+  "sections": {},
+  "title": "LeadPilot-Designsystem",
+  "lastChange": {
+    "by": "Marc",
+    "at": "2026-10-12T10:30:00Z",
+    "via": "Cowork",
+    "note": "Dateien ins Design-System-Format umsortiert (Cover, Logo-Vorschau, index.d.ts, Beispielkarten nach archived/)"
+  }
+}

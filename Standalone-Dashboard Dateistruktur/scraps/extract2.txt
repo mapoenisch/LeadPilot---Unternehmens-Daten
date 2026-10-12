@@ -1,0 +1,98 @@
+=====LINE 1080=====
+# | Kunde | Branche | Paket | Nutzer | ARR | Anteil | NPS | Upsell-Potenzial | Status
+1 | Kunde A (Getränkegroßhandel) | Großhandel | Pro | 30 | 28.800 € | 7,0 % | 62 | niedrig | ✅ aktiv
+2 | Kunde B (Antriebstechnik) | Maschinenbau | Growth | 20 | 21.360 € | 5,2 % | 58 | mittel | ✅ aktiv
+3 | Kunde C (Technischer Großhandel) | Großhandel | Growth | 18 | 19.224 € | 4,7 % | 46 | niedrig | 🟡 beobachten
+4 | Kunde D (Media-Agentur) | Agenturen | Growth | 15 | 16.020 € | 3,9 % | 51 | mittel | ✅ aktiv
+5 | Kunde E (IT-Consulting) | IT / Software | Growth | 13 | 13.884 € | 3,4 % | 64 | hoch | ✅ aktiv
+6 | Kunde F (Baustoffhandel) | Großhandel | Growth | 12 | 12.816 € | 3,1 % | 40 | niedrig | 🟡 beobachten
+7 | Kunde G (Fördertechnik) | Maschinenbau | Growth | 12 | 12.816 € | 3,1 % | 55 | mittel | ✅ aktiv
+8 | Kunde H (Maschinenbau-Zulieferer) | Maschinenbau | Growth | 11 | 11.748 € | 2,9 % | 68 | hoch | ✅ aktiv
+9 | Kunde I (Softwarehaus) | IT / Software | Growth | 10 | 10.680 € | 2,6 % | 71 | hoch | ✅ Referenzkunde
+10 | Kunde J (Elektrogroßhandel) | Großhandel | Growth | 9 | 9.612 € | 2,3 % | 49 | mittel | ✅ aktiv
+ | Top 10 gesamt |  |  | 150 | 156.960 € | 38,1 % | 56 |  | 
+
+=====LINE 1730=====
+Position | Q1 | Q2 | Q3 | Q4 | FY 2025 | FY 2024 | Δ % | Bemerkung
+Erlöse
+Abo-Umsatz (wiederkehrend) | 58.559 | 69.281 | 82.152 | 97.608 | 307.600 | 149.000 | +106 % | Summe der zwölf Monats-MRR
+Onboarding & Setup | 4.000 | 5.500 | 6.500 | 7.000 | 23.000 | 12.000 | +92 % | Einmalgebühr bei Growth und Pro
+Sonstige Erlöse | 1.000 | 1.200 | 1.500 | 1.700 | 5.400 | 3.000 | +80 % | API-Nutzung, Schulungen
+Umsatzerlöse | 63.559 | 75.981 | 90.152 | 106.308 | 336.000 | 164.000 | +105 % | —
+Umsatzkosten
+Umsatzkosten | −23.000 | −27.400 | −32.400 | −38.200 | −121.000 | −64.000 | −89 % | Hosting, KI-API, Customer Success
+Bruttogewinn | 40.559 | 48.581 | 57.752 | 68.108 | 215.000 | 100.000 | +115 % | Bruttomarge 64,0 %
+Betriebliche Aufwendungen
+Sales & Marketing | −47.500 | −50.500 | −53.500 | −57.500 | −209.000 | −141.000 | −48 % | 3 FTE, Media-Spend 40.500 €
+Forschung & Entwicklung | −47.500 | −50.500 | −53.500 | −56.500 | −208.000 | −164.000 | −27 % | 4 FTE Engineering und Product
+General & Administrative | −25.000 | −26.000 | −27.500 | −28.500 | −107.000 | −83.000 | −29 % | Geschäftsführung, Miete, Recht
+EBITDA | −79.441 | −78.419 | −76.748 | −74.392 | −309.000 | −288.000 | −7 % | Burn Rate 25.750 € / Monat
+Abschreibungen | −4.200 | −4.400 | −4.600 | −4.800 | −18.000 | −14.000 | −29 % | Hardware, Geschäftsausstattung
+EBIT | −83.641 | −82.819 | −81.348 | −79.192 | −327.000 | −302.000 | −8 % | —
+Finanzergebnis | −1.300 | −1.400 | −1.400 | −1.400 | −5.500 | −4.000 | −38 % | Zinsen SAB-Innovationsdarlehen
+Ergebnis vor Steuern | −84.941 | −84.219 | −82.748 | −80.592 | −332.500 | −306.000 | −9 % | —
+Sonstige Steuern | −375 | −375 | −375 | −375 | −1.500 | −1.000 | −50 % | Keine Ertragsteuern — Verlustjahr
+Jahresfehlbetrag | −85.316 | −84.594 | −83.123 | −80.967 | −334.000 | −307.000 | −9 % | Planmäßig in der Wachstumsphase
+
+=====LINE 1748=====
+KPI | Plan | Ist | Abweichung | Status | Hauptursache
+ARR | 480.000 € | 411.840 € | −14,2 % | 🔴 | Churn zu hoch, Trial-to-Paid schwach
+MRR (Dezember) | 40.000 € | 34.320 € | −14,2 % | 🔴 | folgt dem ARR
+Neukunden | 65 | 47 | −27,7 % | 🔴 | Langer Sales Cycle, uneinheitliche Demos
+Bruttomarge | 68 % | 64,0 % | −4 PP | 🟡 | Gestiegene KI-API-Kosten
+NRR | 105 % | 101 % | −4 PP | 🟡 | Expansion gleicht Churn nur knapp aus
+GRR | 92 % | 88 % | −4 PP | 🟡 | Umsatzverlust bei Kleinstkunden
+Account-Churn pro Monat | < 2,0 % | 2,8 % | +0,8 PP | 🔴 | Onboarding zu langsam, ICP zu weit gefasst
+Trial-to-Paid | 25 % | 18 % | −7 PP | 🔴 | Kein geführter Trial-Flow
+Marketing-CAC | 700 € | 862 € | +23,1 % | 🔴 | LinkedIn-Ads weniger effizient als geplant
+Burn Rate | 22.000 € | 25.750 € | +17,0 % | 🔴 | Über Plan, Runway verkürzt
+NPS | 40 | 34 | −6 | 🔴 | Support-Lösungszeiten, Onboarding
+
+=====LINE 1801=====
+Kostenblock | Plan 2026 | Ist 2025 | Δ | Anteil | Begründung
+Personal (12 FTE) | 600.000 € | 490.000 € | +22 % | 72 % | Zwei offene Engineering-Stellen, eine zusätzliche CS-Stelle
+Cloud-Infrastruktur & KI-API | 60.000 € | 39.000 € | +54 % | 7 % | Wachsende Nutzerzahl, steigende Modellkosten
+Marketing & Ads | 55.000 € | 40.500 € | +36 % | 7 % | Umschichtung zugunsten Partner und SEO
+Strategische Initiativen | 44.000 € | — | neu | 5 % | Guided Trial, ICP-Schärfung, Partnerprogramm, KI-Aktivierung
+Tools & Lizenzen | 28.000 € | 23.500 € | +19 % | 3 % | Entwicklungs- und Vertriebswerkzeuge
+Büro & Verwaltung | 25.000 € | 30.000 € | −17 % | 3 % | Höherer Remote-Anteil
+Recht, Datenschutz, Security | 18.000 € | 22.000 € | −18 % | 2 % | Keine Zertifizierung angestrebt
+Gesamtaufwand | 830.000 € | 645.000 € | +29 % | 100 % | 
+Plan-Ergebnis 2026 | Betrag | Herleitung
+Umsatzerlöse | 554.000 € | Ø MRR 43.000 € × 12 zuzüglich Onboarding und sonstiger Erlöse
+Bruttogewinn | 377.000 € | bei einer Ziel-Bruttomarge von 68 %
+EBITDA | −276.000 € | Bruttogewinn abzüglich betrieblicher Aufwendungen
+Burn Rate pro Monat | 23.000 € | Ziel erreicht (2025: 25.750 €)
+Liquiditätsbedarf bis Ende 2026 | 276.000 € | gedeckt durch 363.000 € Bestand zum 31.12.2025
+
+=====LINE 1884=====
+Perspektive | Strategisches Ziel | Kennzahl | Ist 2025 | Ziel 2026 | Maßnahme
+Finanzperspektive
+Finanzen | Wachstum halten | ARR | 411.840 € | 620.000 € | Alle Initiativen der Maßnahmen-Roadmap
+Finanzen | Liquidität sichern | Burn Rate / Monat | 25.750 € | < 23.000 € | Kostendisziplin, Umschichtung im Marketing
+Finanzen | Tragfähigkeit belegen | LTV : CAC | 2,7 : 1 | ≥ 3,5 : 1 | Churn-Senkung, ICP-Schärfung
+Kundenperspektive
+Kunden | Bindung erhöhen | Account-Churn / Monat | 2,8 % | < 1,8 % | ICP-Schärfung, Mindestgröße im Funnel
+Kunden | Zufriedenheit steigern | Net Promoter Score | 34 | ≥ 45 | Support-Lösungszeit unter 24 h
+Kunden | Basis ausbauen | Aktive Kunden | 66 | 95 | Guided Trial, Partnerprogramm
+Prozessperspektive
+Prozesse | Aktivierung beschleunigen | Time-to-Value | 11 Tage | < 7 Tage | Geführter Trial-Flow (v2.0)
+Prozesse | Abschluss verbessern | Trial-to-Paid | 18 % | ≥ 26 % | Demo-Playbook je Segment
+Prozesse | Onboarding sichern | Abschlussquote Onboarding | 74 % | ≥ 90 % | Einrichtungs-Checkliste, Datenimport-Assistent
+Lern- und Entwicklungsperspektive
+Team | Engpässe schließen | Headcount | 10 FTE | 12 FTE | Zwei Engineering-Stellen besetzen
+Team | Bindung verbessern | Fluktuationsrate | 22 % | < 12 % | Entwicklungspfade, Beteiligungsprogramm
+Team | Schlüsselrisiko entschärfen | Dokumentation Scoring-Logik | 0 % | 100 % | Wissenstransfer CTO, Q1 2026
+
+=====LINE 1927=====
+# | Risiko | Eintritt | Auswirkung | Bewertung | Gegenmaßnahme
+R1 | Anschlussfinanzierung scheitert oder verzögert sich | mittel | existenzbedrohend | 🔴 kritisch | Ab Q3 2026 vorbereiten; Churn und LTV : CAC vorher sichtbar verbessern; Break-even-Szenario mit reduziertem Team durchrechnen
+R2 | Churn bleibt über 2,5 % pro Monat | mittel | hoch | 🔴 kritisch | ICP-Schärfung, Guided Trial, Mindestgröße im Funnel (Initiativen 1–3)
+R3 | Pipedrive oder HubSpot rollen KI-Scoring als Standard aus | hoch | hoch | 🔴 kritisch | Differenzierung über Einfachheit und DSGVO-Architektur schärfen; Scoring-Qualität als messbaren Vorteil belegen
+R4 | Ausfall des CTO | niedrig | sehr hoch | 🟡 hoch | Wissenstransfer und vollständige Dokumentation der Scoring-Logik in Q1 2026
+R5 | Steigende KI-API-Kosten drücken die Bruttomarge | hoch | mittel | 🟡 hoch | Caching, Modellwahl nach Anwendungsfall, Kosten je Account monatlich überwachen
+R6 | Engineering-Stellen bleiben unbesetzt | hoch | mittel | 🟡 hoch | Remote-Recruiting über den Leipziger Raum hinaus, Beteiligungsprogramm
+R7 | Verlust eines der drei größten Accounts | niedrig | mittel | 🟡 hoch | Quartalsweise Beziehungspflege durch die Geschäftsführung, Frühwarnung über Nutzungsdaten
+R8 | Wirtschaftliche Eintrübung führt zu Budget-Freezes im Mittelstand | mittel | mittel | mittel | Argumentation über verhinderten Umsatzverlust statt über Effizienzgewinn
+R9 | Datenschutzvorfall oder Cyberangriff | niedrig | hoch | mittel | Penetrationstest jährlich, Notfallplan, Cyber-Versicherung prüfen
+

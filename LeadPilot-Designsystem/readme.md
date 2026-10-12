@@ -24,7 +24,7 @@ The source docs are short and directive rather than full copywriting samples, so
 
 - **Dark by default.** The canvas is a dark forest green (`#0B211F`), not a neutral charcoal — LeadPilot has no light-theme surface in its source docs.
 - **Color roles, strictly separated.** Cyan (`#00D9C6`) is the only primary action color — links, active states, main CTAs. Orange (`#FF7A3D`) is an accent reserved for one high-priority moment per screen (a single CTA, a "new" badge) — the docs explicitly warn against using cyan and orange as equal-priority actions on the same screen. Usage ratio: dark ~80–85%, cyan ~10–15%, orange ~3–5%.
-- **Typography.** Space Grotesk (display/headings) + Inter (body) — see "Font substitution" below. Headlines run tight (`tracking-tight`, `leading-tight`); body text stays open (`leading-open`, 1.65). All-caps only for labels/chips/eyebrows.
+- **Typography.** LeadPilot Grotesk (display/headings, own brand face) + Inter (body) — see "Fonts" below. Headlines run tight (`tracking-tight`, `leading-tight`); body text stays open (`leading-open`, 1.65). All-caps only for labels/chips/eyebrows.
 - **Spacing.** Strict 8px grid (4/8/12/16/24/32/48/64px). Generous whitespace; one primary action per section.
 - **Corner radius.** Small elements (inputs) get 8–12px; cards get 20px; buttons and badges are full pills (999px).
 - **Shadow / glow, not drop shadow.** The dark background does most of the depth work — there's no ambient drop-shadow system. The one shadow motif is a soft colored *glow* (cyan or orange, low-opacity blur) reserved for a featured card or a modal, never applied broadly.
@@ -38,13 +38,15 @@ The source docs are short and directive rather than full copywriting samples, so
 
 No icon system, icon font, or icon SVG set was included in the source files. Icons in this system are a **substitute set** (`components/utility/Icon.jsx`) — ~25 simple outline glyphs (chevrons, check, close, search, bell, settings, etc.), Heroicons-style: 24×24 viewbox, 1.75px stroke, `currentColor`. Flagging this substitution — if the real product has its own icon set, swap `Icon.jsx`'s path data and everything downstream (Button, NavItem, Alert, Badge, ui_kits) inherits it automatically. Emoji are not used anywhere in the brand docs or mockups.
 
-## Fonts — substitution flag
+## Fonts
 
-The source files specify only a generic "simple, modern sans-serif" — no font files or family names were provided. This system uses **Space Grotesk** (display/headings) and **Inter** (body), loaded from Google Fonts, plus **JetBrains Mono** for metrics/IDs in data-dense views. If LeadPilot has committed brand fonts, please share the font files (or family names) and this will be updated.
+- **LeadPilot Grotesk** — brand face for display, headings and wordmark. Files: `fonts/LeadPilotGrotesk-{Regular,Medium,SemiBold,Bold}.woff2` (400/500/600/700), wired via `tokens/fonts.css` (`--font-display`). A modified Space Grotesk (SIL OFL 1.1, see `fonts/OFL.txt`): all round dots are true circles (i, j, period, colon, ?, !, umlauts, fi) and the single-storey **a** is the default. Latin only, no italics.
+- **Inter** — body and UI text (Google Fonts).
+- **JetBrains Mono** — metrics, IDs, code (Google Fonts).
 
 ## Logo
 
-The chosen lockup (`assets/logo/leadpilot-logo-full.png`) pairs an orange "Lead" / cyan "Pilot" wordmark with a teal network-node mark, where the network's first node doubles as the wordmark's "o." Because that node is fused into the letterform, a clean icon-only crop isn't possible without redrawing — `assets/logo/leadpilot-mark.png` is a practical crop of the standalone node cluster for favicon/app-icon use, but treat the full lockup as the primary asset. `leadpilot-logo-dark-bg.jpg` is a baked dark-tile export for social/profile use; `leadpilot-logo-square.png` is a square-canvas transparent version. Four earlier "rocket + orbit + tagline" concepts (`assets/logo/explorations/`) were superseded by the network mark and are kept only for historical reference — do not use them in new work.
+The chosen lockup (`assets/logo/leadpilot-logo-full.png`) pairs an orange "Lead" / cyan "Pilot" wordmark with a teal network-node mark, where the network's first node doubles as the wordmark's "o." Because that node is fused into the letterform, a clean icon-only crop isn't possible without redrawing — `assets/logo/leadpilot-mark.png` is a practical crop of the standalone node cluster for favicon/app-icon use, but treat the full lockup as the primary asset. `leadpilot-logo-dark-bg.jpg` is a baked dark-tile export for social/profile use; `leadpilot-logo-square.png` is a square-canvas transparent version. `assets/logo/leadpilot-wordmark.svg` is the wordmark alone: "Lead" (orange) + "Pilot" (cyan) in LeadPilot Grotesk Bold as outlined paths (no font needed), with the dot of the **i** replaced by a node + satellite. Use it on the dark canvas, minimum width about 120px; it complements the PNG lockup rather than replacing it. Four earlier "rocket + orbit + tagline" concepts (`assets/logo/explorations/`) were superseded by the network mark and are kept only for historical reference — do not use them in new work.
 
 ## Components
 
@@ -69,6 +71,7 @@ Both are hand-built from the brand docs' described use cases (landing hero, simp
 
 ```
 styles.css              — root stylesheet (imports all tokens)
+fonts/                  — LeadPilot Grotesk (woff2) and OFL.txt
 tokens/                 — colors, fonts, typography, spacing, radius, shadows
 assets/logo/            — primary lockup, mark crop, dark-tile export, explorations
 assets/brand/           — brand mockup boards (reference only)
@@ -89,7 +92,7 @@ SKILL.md                — Claude Code-compatible skill wrapper
 ## Caveats & ask
 
 - **No codebase or Figma was connected** — everything here is inferred from three markdown spec docs and logo files. If LeadPilot has a real product or marketing site, connect it and this system should be rebuilt against the real screens rather than the hand-built UI kits above.
-- **Fonts are a substitution** (Space Grotesk + Inter) — flagged above. Send real brand font files if they exist.
+- **LeadPilot Grotesk is derived from Space Grotesk**, not drawn from scratch. Inter and JetBrains Mono remain third-party.
 - **Icons are a substitution set** — flagged above. Send a real icon library/export if the product uses one.
 - **Error/success colors (`#FF5A5F` red, `#3DDC97` mint) are my own additions**, tuned in the cyan/orange hue family since the source docs mention only "a separate red tone" for errors without specifying it.
 

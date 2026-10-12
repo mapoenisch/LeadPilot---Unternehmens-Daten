@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/styles.css">
+  <script src="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/_ds_bundle.js"></script>
+  <style>
+    html,body{margin:0;padding:0;background:var(--color-bg);}
+    a{color:var(--color-primary)}
+    a:hover{color:var(--color-primary-hover)}
+    *{box-sizing:border-box}
+  </style>
+</helmet>
+
+<div style="display:flex;min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+
+  <aside style="width:272px;flex-shrink:0;display:flex;flex-direction:column;background:var(--color-bg-deep);border-right:1px solid var(--color-border);height:100vh;position:sticky;top:0;overflow-y:auto">
+    <div style="padding:24px 20px 16px">
+      <img src="assets/logo/leadpilot-logo-full.png" alt="LeadPilot" style="height:28px;display:block">
+      <div style="margin-top:10px;font-size:var(--text-tiny);color:var(--color-text-muted);line-height:1.4">
+        Unternehmens-Dashboard <span style="color:var(--color-text-muted)">· GJ 2025 / Plan 2026 · v2.0</span>
+      </div>
+    </div>
+
+    <nav style="padding:8px 12px 16px;display:flex;flex-direction:column;flex:1">
+      <sc-for list="{{ navCategories }}" as="cat" hint-placeholder-count="12">
+        <div style="border-bottom:1px solid var(--color-border-soft)">
+          <div onClick="{{ cat.onToggle }}" style="display:flex;align-items:center;gap:8px;padding:12px 8px;cursor:pointer;user-select:none;border-radius:var(--radius-md)" style-hover="background:var(--color-surface-raised)">
+            <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Icon" name="{{ cat.chevronIcon }}" size="16" color="var(--color-text-muted)" style="flex-shrink:0" hint-size="16px,16px"></x-import>
+            <span style="flex:1;font-family:var(--font-display);font-size:var(--text-small);font-weight:var(--weight-bold);color:var(--color-text);letter-spacing:var(--tracking-normal)">{{ cat.label }}</span>
+            <sc-if value="{{ cat.isPlanned }}" hint-placeholder-val="{{ false }}">
+              <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Badge" variant="neutral" hint-size="auto,22px">Bald verfügbar</x-import>
+            </sc-if>
+          </div>
+          <sc-if value="{{ cat.expanded }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:2px 4px 12px 26px">
+              <sc-for list="{{ cat.items }}" as="item" hint-placeholder-count="4">
+                <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.NavItem" label="{{ item.label }}" active="{{ item.active }}" href="{{ item.hrefHash }}" onClick="{{ item.onSelect }}" hint-size="100%,36px"></x-import>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="padding:16px 20px 20px;font-size:var(--text-tiny);color:var(--color-text-muted);line-height:1.6;border-top:1px solid var(--color-border-soft);margin-top:8px">
+      Fiktives Schulungsunternehmen<br>Weiterbildung Digital Sales Manager · DBA<br>Marc Pönisch · Stand Juli 2026<br>Datenbasis: Faktenblatt v1.1
+    </div>
+  </aside>
+
+  <main style="flex:1;height:100vh;overflow-y:auto;scroll-behavior:smooth">
+
+    <div style="position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:var(--color-bg);border-bottom:1px solid var(--color-border-soft);backdrop-filter:blur(6px)">
+      <div style="font-size:var(--text-small);color:var(--color-text-muted)"><b style="color:var(--color-text)">{{ breadcrumbCategory }}</b> · {{ breadcrumbItem }}</div>
+      <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Badge" variant="neutral" hint-size="auto,26px">Fiktiv · Schulungsprojekt</x-import>
+    </div>
+
+    <div style="padding:40px 32px 8px;border-bottom:1px solid var(--color-border-soft)">
+      <h1 style="margin:0;font-family:var(--font-display);font-size:var(--text-display);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-tight);line-height:var(--leading-tight)">
+        {{ hero.name }} <em style="color:var(--color-primary);font-style:normal">{{ hero.legalSuffix }}</em>
+      </h1>
+      <p style="max-width:680px;margin:14px 0 0;font-size:var(--text-body);color:var(--color-text-muted);line-height:var(--leading-open)">{{ hero.sub }}</p>
+      <div style="margin:16px 0 24px;display:inline-block;font-family:var(--font-display);font-size:var(--text-h3);color:var(--color-primary)">{{ hero.claim }}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0;border-top:1px solid var(--color-border-soft);padding-top:16px;margin-bottom:16px">
+        <sc-for list="{{ hero.meta }}" as="m" hint-placeholder-count="8">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:4px 16px 4px 0">
+            <span style="font-size:var(--text-tiny);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:var(--tracking-caps)">{{ m.label }}</span>
+            <span style="font-family:var(--font-display);font-size:var(--text-body);font-weight:var(--weight-semibold)">{{ m.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:32px;display:flex;flex-direction:column;gap:56px;max-width:1400px">
+
+      <section id="s-exec" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="01 · Übersicht" title="Executive Dashboard — Geschäftsjahr 2025" description="Kernkennzahlen der LeadPilot GmbH zum Stichtag 31.12.2025. Alle Werte stammen aus dem Faktenblatt v1.1 und sind über die Rechenbrücken im Abschnitt „Datenbasis" miteinander verknüpft." hint-size="100%,90px"></x-import>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ kpis1 }}" as="k" hint-placeholder-count="6">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" delta="{{ k.delta }}" delta-dir="{{ k.deltaDir }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ kpis2 }}" as="k" hint-placeholder-count="6">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" delta="{{ k.delta }}" delta-dir="{{ k.deltaDir }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="ARR-Entwicklung 2025" subtitle="Run-Rate zum Quartalsende, in €" type="{{ chartArr.type }}" labels="{{ chartArr.labels }}" datasets="{{ chartArr.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="MRR-Entwicklung 2025" subtitle="monatlich, in €" type="{{ chartMrr.type }}" labels="{{ chartMrr.labels }}" datasets="{{ chartMrr.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Umsatz & Ergebnis nach Quartal" subtitle="GJ 2025" type="{{ chartQuartal.type }}" labels="{{ chartQuartal.labels }}" datasets="{{ chartQuartal.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="ARR-Verteilung nach Paket" subtitle="31.12.2025" type="{{ chartTier.type }}" labels="{{ chartTier.labels }}" datasets="{{ chartTier.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="info" title="{{ noteExec.title }}" hint-size="100%,140px">
+          <sc-for list="{{ noteExec.paragraphs }}" as="p" hint-placeholder-count="3">
+            <p style="margin:0 0 8px">{{ p }}</p>
+          </sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-profil" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="01 · Übersicht" title="Unternehmenssteckbrief" description="Stammdaten der LeadPilot GmbH nach dem Faktenblatt v1.1 — verbindlich für alle Task Sheets und Auswertungen." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ profileHeaders }}" rows="{{ profileRows }}" hint-size="100%,500px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="info" title="{{ noteProfil.title }}" hint-size="100%,100px">
+          <sc-for list="{{ noteProfil.paragraphs }}" as="p" hint-placeholder-count="2">
+            <p style="margin:0 0 8px">{{ p }}</p>
+          </sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-highlights" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="01 · Übersicht" title="Jahres-Highlights 2025" description="Was im Geschäftsjahr 2025 gelungen ist — und was nicht." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="Was gut lief" headers="{{ highlightsGoodHeaders }}" rows="{{ highlightsGood }}" hint-size="100%,320px"></dc-import>
+          <dc-import name="DataTableCard" title="Was nicht lief" headers="{{ highlightsBadHeaders }}" rows="{{ highlightsBad }}" hint-size="100%,320px"></dc-import>
+        </div>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="warning" title="{{ noteHighlights.title }}" hint-size="100%,100px">
+          <sc-for list="{{ noteHighlights.paragraphs }}" as="p" hint-placeholder-count="2">
+            <p style="margin:0 0 8px">{{ p }}</p>
+          </sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-daten" style="display:flex;flex-direction:column;gap:16px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="01 · Übersicht" title="Datenbasis & Konsistenzprüfung" description="Dieses Dashboard basiert vollständig auf dem LeadPilot Faktenblatt v1.1. Bei Abweichungen zu älteren Dokumenten gilt das Faktenblatt." hint-size="100%,90px"></x-import>
+
+        <h3 style="margin:8px 0 0;font-family:var(--font-display);font-size:var(--text-h3);font-weight:var(--weight-semibold)">Die sechs Rechenbrücken</h3>
+        <p style="margin:0;color:var(--color-text-muted)">Jede Kernzahl lässt sich aus einer anderen herleiten. Wenn eine Brücke nicht aufgeht, ist ein Wert falsch.</p>
+        <dc-import name="DataTableCard" headers="{{ bridgesHeaders }}" rows="{{ bridgesRows }}" hint-size="100%,320px"></dc-import>
+
+        <h3 style="margin:16px 0 0;font-family:var(--font-display);font-size:var(--text-h3);font-weight:var(--weight-semibold)">Verwendete Quelldokumente</h3>
+        <dc-import name="DataTableCard" headers="{{ sourcesHeaders }}" rows="{{ sourcesRows }}" hint-size="100%,320px"></dc-import>
+
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="info" title="{{ noteDaten.title }}" hint-size="100%,120px">
+          <sc-for list="{{ noteDaten.paragraphs }}" as="p" hint-placeholder-count="3">
+            <p style="margin:0 0 8px">{{ p }}</p>
+          </sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-idee" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="02 · Unternehmen" title="Geschäftsidee" description="Ursprung des Unternehmens — entstanden in Task Sheet 2.1.11 aus einer Branchen- und Problemanalyse." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ uIdeaCard.title }}" paragraphs="{{ uIdeaCard.paragraphs }}" hint-size="100%,220px"></dc-import>
+          <sc-for list="{{ uIdeeCards }}" as="c" hint-placeholder-count="2">
+            <dc-import name="InfoCard" title="{{ c.title }}" items="{{ c.items }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section id="s-value" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="02 · Unternehmen" title="Value Proposition & Positionierung" description="Das zentrale Nutzenversprechen und die bewusste Abgrenzung gegenüber den etablierten CRM-Suiten." hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ uValueStatementNote.variant }}" title="{{ uValueStatementNote.title }}" hint-size="100%,90px">
+          <sc-for list="{{ uValueStatementNote.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ uValueCards }}" as="c" hint-placeholder-count="9">
+            <dc-import name="InfoCard" title="{{ c.title }}" paragraphs="{{ c.paragraphs }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="InfoCard" title="{{ uValueDiff.title }}" paragraphs="{{ uValueDiff.paragraphs }}" hint-size="100%,160px"></dc-import>
+      </section>
+
+      <section id="s-historie" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="02 · Unternehmen" title="Gründung & Unternehmensentwicklung" description="Vom Gesellschaftsvertrag 2022 bis zum Stand Juli 2026." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ uHistorieHeaders }}" rows="{{ uHistorieRows }}" hint-size="100%,360px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ uHistorieNote.variant }}" title="{{ uHistorieNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ uHistorieNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-standort" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="02 · Unternehmen" title="Sitz & Räumlichkeiten" description="LeadPilot mietet Büroflächen im Leipziger Zentrum. Es besteht kein Grundbesitz." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ uStandortHeaders }}" rows="{{ uStandortRows }}" hint-size="100%,320px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ uStandortNote.variant }}" title="{{ uStandortNote.title }}" hint-size="100%,90px">
+          <sc-for list="{{ uStandortNote.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-funktion" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="03 · Produkt" title="Produkt & Funktionsweise" description="Wie LeadPilot im Vertriebsalltag konkret arbeitet — vom Lead-Eingang bis zum Management-Dashboard." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ pFunktionMechanism.title }}" items="{{ pFunktionMechanism.items }}" hint-size="100%,260px"></dc-import>
+          <dc-import name="DataTableCard" title="Die vier Bausteine der Automatisierung" headers="{{ pFunktionBausteineHeaders }}" rows="{{ pFunktionBausteineRows }}" hint-size="100%,260px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+          <sc-for list="{{ pFunktionIntelligence }}" as="c" hint-placeholder-count="3">
+            <dc-import name="InfoCard" title="{{ c.title }}" paragraphs="{{ c.paragraphs }}" hint-size="100%,120px"></dc-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section id="s-pricing" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="03 · Produkt" title="Pakete & Preismodell" description="Abrechnung ausschließlich pro Nutzer und Monat. Drei Pakete, keine Paketpreise pro Account." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" title="Preisliste" headers="{{ pPricingHeaders }}" rows="{{ pPricingRows }}" hint-size="100%,220px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ pPricingNoteRegel.variant }}" title="{{ pPricingNoteRegel.title }}" hint-size="100%,120px">
+          <sc-for list="{{ pPricingNoteRegel.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+        <dc-import name="DataTableCard" title="Paketverteilung zum 31.12.2025" headers="{{ pPricingDistHeaders }}" rows="{{ pPricingDistRows }}" hint-size="100%,260px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ pPricingNoteVerteilung.variant }}" title="{{ pPricingNoteVerteilung.title }}" hint-size="100%,120px">
+          <sc-for list="{{ pPricingNoteVerteilung.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-perf" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="03 · Produkt" title="Produkt-Performance 2025" description="Nutzungskennzahlen zum 31.12.2025. Die Aktivierung ist der Engpass, nicht die Technik." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Aktivierung & Feature-Nutzung" subtitle="Quartalsverlauf, in %" type="{{ pPerfChartProdukt.type }}" labels="{{ pPerfChartProdukt.labels }}" datasets="{{ pPerfChartProdukt.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="Kündigungsgründe 2025" subtitle="17 Accounts" type="{{ pPerfChartChurn.type }}" labels="{{ pPerfChartChurn.labels }}" datasets="{{ pPerfChartChurn.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ pPerfMetricsHeaders }}" rows="{{ pPerfMetricsRows }}" hint-size="100%,360px"></dc-import>
+        <dc-import name="DataTableCard" title="Product-Market-Fit-Signale" headers="{{ pPerfPmfHeaders }}" rows="{{ pPerfPmfRows }}" hint-size="100%,240px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ pPerfNote.variant }}" title="{{ pPerfNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ pPerfNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-roadmap" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="03 · Produkt" title="Releases & Roadmap" description="Der Release-Umfang ist auf ein Team von vier Entwicklerinnen und Entwicklern zugeschnitten." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ pRoadmapHeaders }}" rows="{{ pRoadmapRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ pRoadmapNote.variant }}" title="{{ pRoadmapNote.title }}" hint-size="100%,110px">
+          <sc-for list="{{ pRoadmapNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-integr" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="03 · Produkt" title="Integrationen, Technologie & Compliance" description="Die DSGVO-native Architektur ist ein aktiv nutzbares Vertriebsargument." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" headers="{{ pIntegrComplianceHeaders }}" rows="{{ pIntegrComplianceRows }}" hint-size="100%,280px"></dc-import>
+          <dc-import name="DataTableCard" headers="{{ pIntegrIntegHeaders }}" rows="{{ pIntegrIntegRows }}" hint-size="100%,280px"></dc-import>
+        </div>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ pIntegrNote.variant }}" title="{{ pIntegrNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ pIntegrNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-markt" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="04 · Markt & Wettbewerb" title="Marktlage" description="Faktenbasierte Marktdaten aus dem Unternehmens-Check-up — die einzigen nicht-fiktiven Zahlen dieses Dashboards." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ mKpis }}" as="k" hint-placeholder-count="4">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ mTreiber.title }}" items="{{ mTreiber.items }}" hint-size="100%,220px"></dc-import>
+          <dc-import name="InfoCard" title="{{ mTrends.title }}" items="{{ mTrends.items }}" hint-size="100%,220px"></dc-import>
+        </div>
+      </section>
+
+      <section id="s-wettbewerb" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="04 · Markt & Wettbewerb" title="Wettbewerbslandschaft DACH" description="Marktanteile am CRM-Markt — recherchierte Realdaten." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Marktanteile CRM" subtitle="in %" type="{{ mWettbewerbChart.type }}" labels="{{ mWettbewerbChart.labels }}" datasets="{{ mWettbewerbChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ mWettbewerbHeaders }}" rows="{{ mWettbewerbRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ mWettbewerbNote.variant }}" title="{{ mWettbewerbNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ mWettbewerbNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-swot" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="04 · Markt & Wettbewerb" title="SWOT-Analyse" description="Stand 31.12.2025." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+          <sc-for list="{{ mSwotQuadrants }}" as="q" hint-placeholder-count="4">
+            <dc-import name="InfoCard" title="{{ q.title }}" items="{{ q.items }}" hint-size="100%,260px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="DataTableCard" title="SWOT der Gründungsphase — Task Sheet 2.1.11" headers="{{ mSwotCompareHeaders }}" rows="{{ mSwotCompareRows }}" hint-size="100%,280px"></dc-import>
+      </section>
+
+      <section id="s-icp" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Ideal Customer Profile (ICP)" description="Version 1.0 vom 29. Juli 2026." hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ kIcpNote.variant }}" title="{{ kIcpNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ kIcpNote.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="Firmografie" headers="{{ kIcpFirmografieHeaders }}" rows="{{ kIcpFirmografieRows }}" hint-size="100%,260px"></dc-import>
+          <dc-import name="DataTableCard" title="Situative Signale (Trigger)" headers="{{ kIcpTriggerHeaders }}" rows="{{ kIcpTriggerRows }}" hint-size="100%,260px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" title="Unternehmensphase" headers="{{ kIcpPhaseHeaders }}" rows="{{ kIcpPhaseRows }}" hint-size="100%,180px"></dc-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="Technografie & Budget" headers="{{ kIcpTechHeaders }}" rows="{{ kIcpTechRows }}" hint-size="100%,260px"></dc-import>
+          <dc-import name="InfoCard" title="{{ kIcpExclusion.title }}" subtitle="{{ kIcpExclusion.subtitle }}" items="{{ kIcpExclusion.items }}" hint-size="100%,260px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" title="Idealkunden-Beispiel" headers="{{ kIcpBeispielHeaders }}" rows="{{ kIcpBeispielRows }}" hint-size="100%,320px"></dc-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ kIcpFazit.title }}" paragraphs="{{ kIcpFazit.paragraphs }}" hint-size="100%,160px"></dc-import>
+          <dc-import name="InfoCard" title="{{ kIcpJustierung.title }}" paragraphs="{{ kIcpJustierung.paragraphs }}" hint-size="100%,160px"></dc-import>
+        </div>
+      </section>
+
+      <section id="s-persona" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Buyer Persona: „Vertriebsleiter-Volker”" description="Entwickelt in Task Sheet 2.1.12." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ kPersonaSteckbrief.title }}" subtitle="{{ kPersonaSteckbrief.subtitle }}" items="{{ kPersonaSteckbrief.items }}" hint-size="100%,260px"></dc-import>
+          <dc-import name="InfoCard" title="Zitat" paragraphs="{{ kPersonaQuoteParagraphs }}" highlight="true" hint-size="100%,140px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+          <sc-for list="{{ kPersonaCards }}" as="c" hint-placeholder-count="4">
+            <dc-import name="InfoCard" title="{{ c.title }}" items="{{ c.items }}" hint-size="100%,240px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="InfoCard" title="Zusammenfassung" paragraphs="{{ kPersonaZusammenfassungParagraphs }}" hint-size="100%,140px"></dc-import>
+      </section>
+
+      <section id="s-empathy" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Empathy Map & Hero Statement" description="Die verfeinerten Fassungen nach dem Feedbackdurchlauf aus Task Sheet 2.1.12." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+          <sc-for list="{{ kEmpathyQuadrants }}" as="q" hint-placeholder-count="4">
+            <dc-import name="InfoCard" title="{{ q.title }}" items="{{ q.items }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+          <sc-for list="{{ kEmpathyHeroSteps }}" as="c" hint-placeholder-count="3">
+            <dc-import name="InfoCard" title="{{ c.title }}" paragraphs="{{ c.paragraphs }}" highlight="{{ c.highlight }}" hint-size="100%,180px"></dc-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section id="s-segmente" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Kundensegmente & Struktur" description="66 aktive Accounts zum 31.12.2025." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="ARR nach Branche" subtitle="31.12.2025" type="{{ kSegmenteChart.type }}" labels="{{ kSegmenteChart.labels }}" datasets="{{ kSegmenteChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ kSegmenteBranchHeaders }}" rows="{{ kSegmenteBranchRows }}" hint-size="100%,280px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ kSegmenteRegionHeaders }}" rows="{{ kSegmenteRegionRows }}" hint-size="100%,200px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ kSegmenteNote.variant }}" title="{{ kSegmenteNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ kSegmenteNote.paragraphs }}" as="p" hint-placeholder-count="4"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-top10" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Top-10-Kunden nach ARR" description="Anonymisierte Darstellung der zehn umsatzstärksten Accounts." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ kTop10Headers }}" rows="{{ kTop10Rows }}" hint-size="100%,420px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ kTop10Note.variant }}" title="{{ kTop10Note.title }}" hint-size="100%,120px">
+          <sc-for list="{{ kTop10Note.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-cs" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="05 · Kunden" title="Customer Success & Kundenbindung" description="Hier entscheidet sich, ob das Geschäftsmodell trägt." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ kCsKpis }}" as="k" hint-placeholder-count="6">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ kCsMetricHeaders }}" rows="{{ kCsMetricRows }}" hint-size="100%,280px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ kCsReasonHeaders }}" rows="{{ kCsReasonRows }}" hint-size="100%,220px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ kCsNote.variant }}" title="{{ kCsNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ kCsNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-bmc" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="06 · Geschäftsmodell" title="Business Model Canvas" description="Version 1.0 vom 20. Juli 2026." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ gBmcBlocks }}" as="b" hint-placeholder-count="9">
+            <dc-import name="InfoCard" title="{{ b.title }}" paragraphs="{{ b.paragraphs }}" items="{{ b.items }}" footnote="{{ b.footnote }}" highlight="{{ b.highlight }}" hint-size="100%,260px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="InfoCard" title="{{ gBmcAnnahmen.title }}" items="{{ gBmcAnnahmen.items }}" hint-size="100%,180px"></dc-import>
+      </section>
+
+      <section id="s-logik" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="06 · Geschäftsmodell" title="Geschäftliche Logik" description="Wie das Geschäftsmodell im Kern funktioniert." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ gLogikCards }}" as="c" hint-placeholder-count="6">
+            <dc-import name="InfoCard" title="{{ c.title }}" paragraphs="{{ c.paragraphs }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section id="s-funnel" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Sales Funnel 2025" description="1.776 Leads führten zu 47 Neukunden — eine Gesamtkonversion von 2,6 %." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Funnel-Stufen nach Quartal" subtitle="GJ 2025" type="{{ vFunnelChart.type }}" labels="{{ vFunnelChart.labels }}" datasets="{{ vFunnelChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ vFunnelHeaders }}" rows="{{ vFunnelRows }}" hint-size="100%,280px"></dc-import>
+        <dc-import name="DataTableCard" title="Trial-to-Paid als eigentlicher Conversion-Engpass" headers="{{ vFunnelTrialHeaders }}" rows="{{ vFunnelTrialRows }}" hint-size="100%,220px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vFunnelNote.variant }}" title="{{ vFunnelNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ vFunnelNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-sla" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="SLA — Marketing & Sales" description="Verbindliche Übergaberegeln zwischen Marketing und Vertrieb." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" title="{{ vSlaHandoffTitle }}" headers="{{ vSlaHandoffHeaders }}" rows="{{ vSlaHandoffRows }}" hint-size="100%,200px"></dc-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ vSlaMarketing.title }}" items="{{ vSlaMarketing.items }}" hint-size="100%,180px"></dc-import>
+          <dc-import name="InfoCard" title="{{ vSlaSales.title }}" items="{{ vSlaSales.items }}" hint-size="100%,180px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ vSlaKpis }}" as="k" hint-placeholder-count="3">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section id="s-kanaele" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Kanalperformance" description="Verteilung der 47 Neukunden auf die Akquisekanäle." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Neukunden nach Kanal" subtitle="Anteil in %" type="{{ vKanaeleChartKanal.type }}" labels="{{ vKanaeleChartKanal.labels }}" datasets="{{ vKanaeleChartKanal.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="Marketing-CAC nach Kanal" subtitle="in € je Neukunde" type="{{ vKanaeleChartRoi.type }}" labels="{{ vKanaeleChartRoi.labels }}" datasets="{{ vKanaeleChartRoi.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ vKanaeleHeaders }}" rows="{{ vKanaeleRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vKanaeleNote.variant }}" title="{{ vKanaeleNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ vKanaeleNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-mbudget" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Marketing-Budget 2025" description="Media-Spend von 40.500 € bei einem Gesamtbudget von 39.000 €." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Budget vs. Ist nach Kanal" subtitle="GJ 2025, in €" type="{{ vMbudgetChart.type }}" labels="{{ vMbudgetChart.labels }}" datasets="{{ vMbudgetChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ vMbudgetHeaders }}" rows="{{ vMbudgetRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vMbudgetNote.variant }}" title="{{ vMbudgetNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ vMbudgetNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-brand" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Brand & Digital Presence 2025" description="Realistische Reichweitenzahlen für ein Unternehmen mit 411.840 € ARR." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Reichweite im Quartalsverlauf" subtitle="GJ 2025" type="{{ vBrandChart.type }}" labels="{{ vBrandChart.labels }}" datasets="{{ vBrandChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ vBrandHeaders }}" rows="{{ vBrandRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vBrandNote.variant }}" title="{{ vBrandNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ vBrandNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-content" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Content-Strategie" description="Von den Pain Points der Persona bis zum 4-Wochen-Redaktionsplan." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ vContentThemes }}" as="t" hint-placeholder-count="4">
+            <dc-import name="InfoCard" title="{{ t.title }}" items="{{ t.items }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+        <dc-import name="InfoCard" title="{{ vContentIdeas.title }}" items="{{ vContentIdeas.items }}" hint-size="100%,200px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vContentPlanNote.variant }}" title="{{ vContentPlanNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ vContentPlanNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+        <dc-import name="DataTableCard" headers="{{ vContentCalendarHeaders }}" rows="{{ vContentCalendarRows }}" hint-size="100%,360px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vContentDraftNote.variant }}" title="{{ vContentDraftNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ vContentDraftNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-tools" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Digitale Tools im Vertrieb" description="Aus Task Sheet 2.1.14." hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vToolsIntro.variant }}" title="{{ vToolsIntro.title }}" hint-size="100%,110px">
+          <sc-for list="{{ vToolsIntro.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="Tool-Kategorisierung" headers="{{ vToolsCatHeaders }}" rows="{{ vToolsCatRows }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="InfoCard" title="{{ vToolsWhyImportant.title }}" items="{{ vToolsWhyImportant.items }}" hint-size="100%,180px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <sc-for list="{{ vToolsProfiles }}" as="c" hint-placeholder-count="2">
+            <dc-import name="InfoCard" title="{{ c.title }}" paragraphs="{{ c.paragraphs }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vToolsHypothesis.variant }}" title="{{ vToolsHypothesis.title }}" hint-size="100%,80px">
+          <sc-for list="{{ vToolsHypothesis.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="Werkzeugkasten aus Einzeltools" headers="{{ vToolsToolboxHeaders }}" rows="{{ vToolsToolboxRows }}" hint-size="100%,280px"></dc-import>
+          <dc-import name="InfoCard" title="{{ vToolsLimits.title }}" items="{{ vToolsLimits.items }}" footnote="{{ vToolsLimits.footnote }}" hint-size="100%,280px"></dc-import>
+        </div>
+      </section>
+
+      <section id="s-planung" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Marketingplanung: 6-Monats-Roadmap" description="August 2026 – Januar 2027." hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vPlanungIntro.variant }}" title="{{ vPlanungIntro.title }}" hint-size="100%,100px">
+          <sc-for list="{{ vPlanungIntro.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <dc-import name="InfoCard" title="{{ vPlanungTimeline.title }}" items="{{ vPlanungTimeline.items }}" hint-size="100%,260px"></dc-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Budget je Monat" subtitle="Aug 2026 – Jan 2027, in €" type="{{ vPlanungChartBudget.type }}" labels="{{ vPlanungChartBudget.labels }}" datasets="{{ vPlanungChartBudget.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="Meilensteine: Basis vs. Ziel Jan 2027" type="{{ vPlanungChartKpi.type }}" labels="{{ vPlanungChartKpi.labels }}" datasets="{{ vPlanungChartKpi.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ vPlanungKpiHeaders }}" rows="{{ vPlanungKpiRows }}" hint-size="100%,220px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ vPlanungBudgetHeaders }}" rows="{{ vPlanungBudgetRows }}" hint-size="100%,240px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vPlanungNote.variant }}" title="{{ vPlanungNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ vPlanungNote.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-kampagne" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="07 · Vertrieb & Marketing" title="Kampagne: LeadPilot Connect" description="Zweiwöchiger Launch-Sprint (24.08.–06.09.2026)." hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vKampagneIntro.variant }}" title="{{ vKampagneIntro.title }}" hint-size="100%,100px">
+          <sc-for list="{{ vKampagneIntro.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ vKampagneKpis }}" as="k" hint-placeholder-count="4">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Budget-Verteilung" subtitle="Launch-Sprint, in €" type="{{ vKampagneChartBudget.type }}" labels="{{ vKampagneChartBudget.labels }}" datasets="{{ vKampagneChartBudget.datasets }}" hint-size="100%,280px"></dc-import>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <dc-import name="InfoCard" title="{{ vKampagneQuoteCard.title }}" paragraphs="{{ vKampagneQuoteCard.paragraphs }}" hint-size="100%,90px"></dc-import>
+            <dc-import name="InfoCard" title="{{ vKampagneZielgruppeCard.title }}" paragraphs="{{ vKampagneZielgruppeCard.paragraphs }}" hint-size="100%,110px"></dc-import>
+          </div>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ vKampagneHeaders }}" rows="{{ vKampagneRows }}" hint-size="100%,320px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ vKampagneNote.variant }}" title="{{ vKampagneNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ vKampagneNote.paragraphs }}" as="p" hint-placeholder-count="1"><p style="margin:0">{{ p }}</p></sc-for>
+        </x-import>
+        <dc-import name="InfoCard" title="Internal Resources" paragraphs="{{ vKampagneInternalParagraphs }}" hint-size="100%,90px"></dc-import>
+      </section>
+
+      <section id="s-guv" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="08 · Finanzen" title="Gewinn- und Verlustrechnung 2025" description="Vollständige GuV mit Quartalsaufteilung und Vorjahresvergleich." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="Umsatzstruktur nach Erlösart" subtitle="FY 2025" type="{{ fGuvChartErloese.type }}" labels="{{ fGuvChartErloese.labels }}" datasets="{{ fGuvChartErloese.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="Kosten & Ergebnis" subtitle="FY 2025 vs. FY 2024" type="{{ fGuvChartKosten.type }}" labels="{{ fGuvChartKosten.labels }}" datasets="{{ fGuvChartKosten.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ fGuvHeaders }}" rows="{{ fGuvRows }}" hint-size="100%,480px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ fGuvNote.variant }}" title="{{ fGuvNote.title }}" hint-size="100%,110px">
+          <sc-for list="{{ fGuvNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-bilanz" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="08 · Finanzen" title="Bilanz- & SaaS-Kennzahlen" description="Bilanzstruktur zum 31.12.2025." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ fBilanzHeaders }}" rows="{{ fBilanzRows }}" hint-size="100%,320px"></dc-import>
+        <dc-import name="DataTableCard" title="Kern-SaaS-Metriken: Plan vs. Ist GJ 2025" headers="{{ fBilanzKpiHeaders }}" rows="{{ fBilanzKpiRows }}" hint-size="100%,420px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ fBilanzNote.variant }}" title="{{ fBilanzNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ fBilanzNote.paragraphs }}" as="p" hint-placeholder-count="4"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-unit" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="08 · Finanzen" title="SaaS Unit Economics" description="Ob sich ein Kunde rechnet, entscheidet über die Tragfähigkeit des Geschäftsmodells." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+          <sc-for list="{{ fUnitKpis }}" as="k" hint-placeholder-count="6">
+            <dc-import name="KpiCard" label="{{ k.label }}" value="{{ k.value }}" unit="{{ k.unit }}" note="{{ k.note }}" highlight="{{ k.highlight }}" hint-size="100%,140px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px">
+          <dc-import name="ChartCard" title="MRR-Planung 2026" subtitle="monatlich, in €" type="{{ fUnitChartMrr26.type }}" labels="{{ fUnitChartMrr26.labels }}" datasets="{{ fUnitChartMrr26.datasets }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="ChartCard" title="Churn & Trial-to-Paid 2026" subtitle="Zielpfad, in %" type="{{ fUnitChartChurn26.type }}" labels="{{ fUnitChartChurn26.labels }}" datasets="{{ fUnitChartChurn26.datasets }}" hint-size="100%,300px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" headers="{{ fUnitHeaders }}" rows="{{ fUnitRows }}" hint-size="100%,220px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ fUnitNote.variant }}" title="{{ fUnitNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ fUnitNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-budget" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="08 · Finanzen" title="Budget- & Kostenplan 2026" description="Geplanter Gesamtaufwand von 830.000 € bei geplanten Erlösen von 554.000 €." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Kostenverteilung 2026" subtitle="Plan, in €" type="{{ fBudgetChart.type }}" labels="{{ fBudgetChart.labels }}" datasets="{{ fBudgetChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ fBudgetHeaders }}" rows="{{ fBudgetRows }}" hint-size="100%,340px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ fBudgetResultHeaders }}" rows="{{ fBudgetResultRows }}" hint-size="100%,220px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ fBudgetNote.variant }}" title="{{ fBudgetNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ fBudgetNote.paragraphs }}" as="p" hint-placeholder-count="3"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-headcount" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="09 · Organisation" title="Headcount-Entwicklung 2025" description="Wachstum von 8 auf 10 FTE bei zwei Abgängen im Engineering." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Headcount nach Bereich" subtitle="GJ 2025, FTE" type="{{ oHeadcountChart.type }}" labels="{{ oHeadcountChart.labels }}" datasets="{{ oHeadcountChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ oHeadcountHeaders }}" rows="{{ oHeadcountRows }}" hint-size="100%,280px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ oHeadcountNote.variant }}" title="{{ oHeadcountNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ oHeadcountNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-hr" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="09 · Organisation" title="HR-Kennzahlen 2025" hint-size="100%,60px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ oHrHeaders }}" rows="{{ oHrRows }}" hint-size="100%,320px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ oHrNote.variant }}" title="{{ oHrNote.title }}" hint-size="100%,100px">
+          <sc-for list="{{ oHrNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-team" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="09 · Organisation" title="Teamstruktur & Engpässe" description="Zehn Personen, fünf Funktionen — und drei strukturelle Engpässe." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ oTeamHeaders }}" rows="{{ oTeamRows }}" hint-size="100%,260px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ oTeamNote.variant }}" title="{{ oTeamNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ oTeamNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-okr" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="10 · Strategie 2026+" title="Strategische Ziele & OKRs 2026" description="Neun Schlüsselergebnisse, die alle auf denselben Engpass einzahlen: die Kundenbindung." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="Basiswert 2025 vs. Zielwert 2026" type="{{ sOkrChart.type }}" labels="{{ sOkrChart.labels }}" datasets="{{ sOkrChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ sOkrHeaders }}" rows="{{ sOkrRows }}" hint-size="100%,380px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ sOkrNote.variant }}" title="{{ sOkrNote.title }}" hint-size="100%,110px">
+          <sc-for list="{{ sOkrNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-bsc" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="10 · Strategie 2026+" title="Balanced Scorecard 2026" description="Die vier Perspektiven mit jeweils messbaren Zielgrößen." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ sBscHeaders }}" rows="{{ sBscRows }}" hint-size="100%,440px"></dc-import>
+      </section>
+
+      <section id="s-massnahmen" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="10 · Strategie 2026+" title="Maßnahmenportfolio & Roadmap 2026" description="Sieben Initiativen mit einem Gesamtbudget von 44.000 €." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ sMassnahmenHeaders }}" rows="{{ sMassnahmenRows }}" hint-size="100%,340px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ sMassnahmenNote.variant }}" title="{{ sMassnahmenNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ sMassnahmenNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-treiber" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="10 · Strategie 2026+" title="Wachstumstreiber & ARR-Effekte 2026" description="Die ARR-Lücke von 208.160 € zwischen Ist 2025 und Ziel 2026." hint-size="100%,90px"></x-import>
+        <dc-import name="ChartCard" title="ARR-Effekt je Treiber" subtitle="Plan 2026, in €" type="{{ sTreiberChart.type }}" labels="{{ sTreiberChart.labels }}" datasets="{{ sTreiberChart.datasets }}" hint-size="100%,300px"></dc-import>
+        <dc-import name="DataTableCard" headers="{{ sTreiberHeaders }}" rows="{{ sTreiberRows }}" hint-size="100%,260px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ sTreiberNote.variant }}" title="{{ sTreiberNote.title }}" hint-size="100%,110px">
+          <sc-for list="{{ sTreiberNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-risiko" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="10 · Strategie 2026+" title="Risikoregister" description="Bewertung nach Eintrittswahrscheinlichkeit und Schadenshöhe, mit konkreten Gegenmaßnahmen." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ sRisikoHeaders }}" rows="{{ sRisikoRows }}" hint-size="100%,420px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ sRisikoNote.variant }}" title="{{ sRisikoNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ sRisikoNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-satzung" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="11 · Recht & Gründung" title="Satzung (Gesellschaftsvertrag)" description="Fiktive Satzung der LeadPilot GmbH, Leipzig, den 21. Juli 2022." hint-size="100%,90px"></x-import>
+        <dc-import name="InfoCard" title="Auszug aus der Satzung" items="{{ rSatzungItems }}" footnote="{{ rSatzungSignature }}" hint-size="100%,320px"></dc-import>
+      </section>
+
+      <section id="s-gesellschafter" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="11 · Recht & Gründung" title="Gesellschafterliste" description="Stand nach der Kapitalerhöhung im Rahmen der Seed-Finanzierung, Q1 2024." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ rGesellschafterHeaders }}" rows="{{ rGesellschafterRows }}" hint-size="100%,260px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ rGesellschafterNote.variant }}" title="{{ rGesellschafterNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ rGesellschafterNote.paragraphs }}" as="p" hint-placeholder-count="4"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ rGesellschafterNoteWarn.variant }}" title="{{ rGesellschafterNoteWarn.title }}" hint-size="100%,120px">
+          <sc-for list="{{ rGesellschafterNoteWarn.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-handelsregister" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="11 · Recht & Gründung" title="Anmeldung zum Handelsregister" description="Musteranmeldung einer neu errichteten GmbH an das Amtsgericht Leipzig." hint-size="100%,90px"></x-import>
+        <dc-import name="InfoCard" title="{{ rHandelsregisterIntro }}" items="{{ rHandelsregisterItems }}" footnote="{{ rHandelsregisterSignature }}" hint-size="100%,280px"></dc-import>
+      </section>
+
+      <section id="s-gf" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="11 · Recht & Gründung" title="Geschäftsführer-Anstellungsvertrag" description="Zwischen der LeadPilot GmbH und Herrn Marc Pönisch." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <sc-for list="{{ rGfCards }}" as="c" hint-placeholder-count="2">
+            <dc-import name="InfoCard" title="{{ c.title }}" items="{{ c.items }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+        <div style="color:var(--color-text-muted);font-size:var(--text-tiny)">{{ rGfSignature }}</div>
+      </section>
+
+      <section id="s-mietvertrag" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="11 · Recht & Gründung" title="Mietvertrag" description="Gewerberaummietvertrag über die Büroflächen Augustusplatz 9, 04109 Leipzig." hint-size="100%,90px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ rMietvertragHeaders }}" rows="{{ rMietvertragRows }}" hint-size="100%,320px"></dc-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <sc-for list="{{ rMietvertragCards }}" as="c" hint-placeholder-count="2">
+            <dc-import name="InfoCard" title="{{ c.title }}" items="{{ c.items }}" hint-size="100%,220px"></dc-import>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ rMietvertragNote.variant }}" title="{{ rMietvertragNote.title }}" hint-size="100%,120px">
+          <sc-for list="{{ rMietvertragNote.paragraphs }}" as="p" hint-placeholder-count="2"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+      <section id="s-projekt" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="12 · Projektkontext" title="Projektkontext & Task Sheets" description="Warum es LeadPilot gibt und in welchem Rahmen das Unternehmen entwickelt wurde." hint-size="100%,90px"></x-import>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <dc-import name="DataTableCard" title="{{ jRahmenTitle }}" headers="{{ jRahmenHeaders }}" rows="{{ jRahmenRows }}" hint-size="100%,220px"></dc-import>
+          <dc-import name="InfoCard" title="{{ jWarum.title }}" items="{{ jWarum.items }}" hint-size="100%,220px"></dc-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <dc-import name="InfoCard" title="{{ jZiel.title }}" items="{{ jZiel.items }}" hint-size="100%,200px"></dc-import>
+          <dc-import name="InfoCard" title="{{ jAnforderungen.title }}" items="{{ jAnforderungen.items }}" hint-size="100%,200px"></dc-import>
+        </div>
+        <dc-import name="DataTableCard" title="Bearbeitete Task Sheets" headers="{{ jTaskHeaders }}" rows="{{ jTaskRows }}" hint-size="100%,380px"></dc-import>
+      </section>
+
+      <section id="s-quellen" style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.SectionHeader" eyebrow="12 · Projektkontext" title="Quellen & Methodik" hint-size="100%,60px"></x-import>
+        <dc-import name="DataTableCard" headers="{{ jQuellenHeaders }}" rows="{{ jQuellenRows }}" hint-size="100%,420px"></dc-import>
+        <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Alert" variant="{{ jQuellenNote.variant }}" title="{{ jQuellenNote.title }}" hint-size="100%,140px">
+          <sc-for list="{{ jQuellenNote.paragraphs }}" as="p" hint-placeholder-count="4"><p style="margin:0 0 8px">{{ p }}</p></sc-for>
+        </x-import>
+      </section>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const HERO_FALLBACK = {
+  name: 'LeadPilot', legalSuffix: 'GmbH',
+  sub: 'KI-gestütztes Sales-CRM für Lead-Management und Vertriebsautomatisierung im deutschen B2B-Mittelstand. Jeder Lead bekommt automatisch seinen nächsten fälligen Schritt — damit keiner mehr vergessen wird.',
+  claim: '„Kein Lead bleibt zurück."',
+  meta: [
+    { label: 'Rechtsform', value: 'GmbH' }, { label: 'Gegründet', value: '21. Juli 2022' },
+    { label: 'Launch', value: 'Q1 2024' }, { label: 'Sitz', value: 'Leipzig, Sachsen' },
+    { label: 'Branche', value: 'B2B SaaS' }, { label: 'Mitarbeitende', value: '10 FTE' },
+    { label: 'ARR 2025', value: '411.840 €' }, { label: 'Kunden', value: '66' },
+  ],
+};
+
+class Component extends DCLogic {
+  state = {
+    nav: null, exec: null, unternehmen: null, produkt: null, markt: null, kunden: null,
+    geschaeftsmodell: null, vertrieb: null, finanzen: null, organisation: null, strategie: null,
+    recht: null, projektkontext: null, activeSection: 's-exec', expandedCats: {},
+  };
+
+  async componentDidMount() {
+    const mod = await import('./data/dataSource.js');
+    const [nav, exec, unternehmen, produkt, markt, kunden, geschaeftsmodell, vertrieb, finanzen, organisation, strategie, recht, projektkontext] = await Promise.all([
+      mod.getNav(), mod.getExecOverview(), mod.getUnternehmen(), mod.getProdukt(), mod.getMarkt(), mod.getKunden(),
+      mod.getGeschaeftsmodell(), mod.getVertrieb(), mod.getFinanzen(), mod.getOrganisation(), mod.getStrategie(),
+      mod.getRecht(), mod.getProjektkontext(),
+    ]);
+    const initialCat = nav.find(cat => (cat.items || []).some(i => i.id === this.state.activeSection));
+    this.setState({
+      nav, exec, unternehmen, produkt, markt, kunden, geschaeftsmodell, vertrieb, finanzen, organisation, strategie, recht, projektkontext,
+      expandedCats: initialCat ? { [initialCat.id]: true } : {},
+    });
+  }
+
+  selectSection(id) {
+    this.setState({ activeSection: id });
+  }
+
+  toggleCategory(catId) {
+    this.setState(s => ({ expandedCats: { ...s.expandedCats, [catId]: !s.expandedCats[catId] } }));
+  }
+
+  renderVals() {
+    const nav = this.state.nav;
+    const exec = this.state.exec;
+    const activeSection = this.state.activeSection;
+
+    const navCategories = nav ? nav.map(cat => {
+      const expanded = !!this.state.expandedCats[cat.id];
+      return {
+        label: cat.label,
+        isLive: cat.status === 'live',
+        isPlanned: cat.status !== 'live',
+        expanded,
+        chevronIcon: expanded ? 'chevronDown' : 'chevronRight',
+        onToggle: () => this.toggleCategory(cat.id),
+        items: (cat.items || []).map(item => ({
+          label: item.label,
+          active: item.id === activeSection,
+          hrefHash: '#' + item.id,
+          onSelect: () => this.selectSection(item.id),
+        })),
+      };
+    }) : undefined;
+
+    let breadcrumbCategory = 'Übersicht', breadcrumbItem = 'Executive Dashboard';
+    if (nav) {
+      for (const cat of nav) {
+        const found = (cat.items || []).find(i => i.id === activeSection);
+        if (found) { breadcrumbCategory = cat.label; breadcrumbItem = found.label; break; }
+      }
+    }
+
+    return {
+      navCategories,
+      breadcrumbCategory, breadcrumbItem,
+      hero: (exec && exec.hero) || HERO_FALLBACK,
+      kpis1: exec ? exec.kpis1 : undefined,
+      kpis2: exec ? exec.kpis2 : undefined,
+      chartArr: exec ? exec.chartArr : { type: 'line', labels: [], datasets: [] },
+      chartMrr: exec ? exec.chartMrr : { type: 'bar', labels: [], datasets: [] },
+      chartQuartal: exec ? exec.chartQuartal : { type: 'bar', labels: [], datasets: [] },
+      chartTier: exec ? exec.chartTier : { type: 'doughnut', labels: [], datasets: [] },
+      noteExec: (exec && exec.noteExec) || { title: '', paragraphs: [] },
+      profileHeaders: ['Merkmal', 'Angabe'],
+      profileRows: exec ? exec.profileRows : undefined,
+      noteProfil: (exec && exec.notePofil) || { title: '', paragraphs: [] },
+      highlightsGoodHeaders: ['Bereich', 'Ereignis', 'Wirkung'],
+      highlightsGood: exec ? exec.highlightsGood : undefined,
+      highlightsBadHeaders: ['Rückschlag', 'Kennzahl', 'Konsequenz'],
+      highlightsBad: exec ? exec.highlightsBad : undefined,
+      noteHighlights: (exec && exec.noteHighlights) || { title: '', paragraphs: [] },
+      bridgesHeaders: ['#', 'Brücke', 'Rechnung', 'Ergebnis', 'Status'],
+      bridgesRows: exec ? exec.bridgesRows : undefined,
+      sourcesHeaders: ['Dokument', 'Rolle'],
+      sourcesRows: exec ? exec.sourcesRows : undefined,
+      noteDaten: (exec && exec.noteDaten) || { title: '', paragraphs: [] },
+      ...this.categoryVals(),
+    };
+  }
+
+  categoryVals() {
+    const u = this.state.unternehmen, p = this.state.produkt, m = this.state.markt, k = this.state.kunden;
+    const g = this.state.geschaeftsmodell, v = this.state.vertrieb, f = this.state.finanzen;
+    const o = this.state.organisation, s = this.state.strategie, r = this.state.recht, j = this.state.projektkontext;
+    return {
+      uIdeaCard: u?.idee?.cardIdea, uIdeeCards: u ? [u.idee.cardBranchen, u.idee.cardProbleme] : undefined,
+      uValueStatementNote: u ? { title: 'Value Proposition', variant: 'info', paragraphs: [u.value.statement] } : undefined,
+      uValueCards: u?.value?.cards, uValueDiff: u?.value?.differentiation,
+      uHistorieHeaders: ['Zeitpunkt', 'Ereignis', 'Volumen'], uHistorieRows: u?.historie?.rows, uHistorieNote: u?.historie?.note,
+      uStandortHeaders: ['Merkmal', 'Angabe'], uStandortRows: u?.standort?.rows, uStandortNote: u?.standort?.note,
+
+      pFunktionMechanism: p?.funktion?.mechanism, pFunktionBausteineHeaders: p?.funktion?.bausteineHeaders, pFunktionBausteineRows: p?.funktion?.bausteineRows,
+      pFunktionIntelligence: p?.funktion?.intelligence,
+      pPricingHeaders: p?.pricing?.priceHeaders, pPricingRows: p?.pricing?.priceRows, pPricingNoteRegel: p?.pricing?.noteRegel,
+      pPricingDistHeaders: p?.pricing?.distHeaders, pPricingDistRows: p?.pricing?.distRows, pPricingNoteVerteilung: p?.pricing?.noteVerteilung,
+      pPerfChartProdukt: p?.perf?.chartProdukt, pPerfChartChurn: p?.perf?.chartChurn,
+      pPerfMetricsHeaders: p?.perf?.metricsHeaders, pPerfMetricsRows: p?.perf?.metricsRows,
+      pPerfPmfHeaders: p?.perf?.pmfHeaders, pPerfPmfRows: p?.perf?.pmfRows, pPerfNote: p?.perf?.note,
+      pRoadmapHeaders: p?.roadmap?.headers, pRoadmapRows: p?.roadmap?.rows, pRoadmapNote: p?.roadmap?.note,
+      pIntegrComplianceHeaders: p?.integr?.complianceHeaders, pIntegrComplianceRows: p?.integr?.complianceRows,
+      pIntegrIntegHeaders: p?.integr?.integHeaders, pIntegrIntegRows: p?.integr?.integRows, pIntegrNote: p?.integr?.note,
+
+      mKpis: m?.markt?.kpis, mTreiber: m?.markt?.treiber, mTrends: m?.markt?.trends,
+      mWettbewerbChart: m?.wettbewerb?.chart, mWettbewerbHeaders: m?.wettbewerb?.headers, mWettbewerbRows: m?.wettbewerb?.rows, mWettbewerbNote: m?.wettbewerb?.note,
+      mSwotQuadrants: m?.swot?.quadrants, mSwotCompareHeaders: m?.swot?.compareHeaders, mSwotCompareRows: m?.swot?.compareRows,
+
+      kIcpNote: k?.icp?.note, kIcpFirmografieHeaders: k?.icp?.firmografieHeaders, kIcpFirmografieRows: k?.icp?.firmografieRows,
+      kIcpTriggerHeaders: k?.icp?.triggerHeaders, kIcpTriggerRows: k?.icp?.triggerRows,
+      kIcpPhaseHeaders: k?.icp?.phaseHeaders, kIcpPhaseRows: k?.icp?.phaseRows,
+      kIcpTechHeaders: k?.icp?.techHeaders, kIcpTechRows: k?.icp?.techRows, kIcpExclusion: k?.icp?.exclusion,
+      kIcpBeispielHeaders: k?.icp?.beispielHeaders, kIcpBeispielRows: k?.icp?.beispielRows,
+      kIcpFazit: k?.icp?.fazit, kIcpJustierung: k?.icp?.justierung,
+      kPersonaSteckbrief: k?.persona?.steckbrief,
+      kPersonaQuoteParagraphs: k?.persona ? [k.persona.quote] : undefined,
+      kPersonaCards: k?.persona ? [k.persona.ziele, k.persona.kanaele, k.persona.painPoints, k.persona.persoenlichkeit] : undefined,
+      kPersonaZusammenfassungParagraphs: k?.persona ? [k.persona.zusammenfassung] : undefined,
+      kEmpathyQuadrants: k?.empathy?.quadrants, kEmpathyHeroSteps: k?.empathy?.heroSteps,
+      kSegmenteChart: k?.segmente?.chart, kSegmenteBranchHeaders: k?.segmente?.branchHeaders, kSegmenteBranchRows: k?.segmente?.branchRows,
+      kSegmenteRegionHeaders: k?.segmente?.regionHeaders, kSegmenteRegionRows: k?.segmente?.regionRows, kSegmenteNote: k?.segmente?.note,
+      kTop10Headers: k?.top10?.headers, kTop10Rows: k?.top10?.rows, kTop10Note: k?.top10?.note,
+      kCsKpis: k?.cs?.kpis, kCsMetricHeaders: k?.cs?.metricHeaders, kCsMetricRows: k?.cs?.metricRows,
+      kCsReasonHeaders: k?.cs?.reasonHeaders, kCsReasonRows: k?.cs?.reasonRows, kCsNote: k?.cs?.note,
+
+      gBmcBlocks: g?.bmc?.blocks, gBmcAnnahmen: g?.bmc?.annahmen, gLogikCards: g?.logik?.cards,
+
+      vFunnelChart: v?.funnel?.chart, vFunnelHeaders: v?.funnel?.headers, vFunnelRows: v?.funnel?.rows,
+      vFunnelTrialHeaders: v?.funnel?.trialHeaders, vFunnelTrialRows: v?.funnel?.trialRows, vFunnelNote: v?.funnel?.note,
+      vSlaHandoffTitle: v?.sla?.handoff?.title, vSlaHandoffHeaders: v?.sla?.handoff?.headers, vSlaHandoffRows: v?.sla?.handoff?.rows,
+      vSlaMarketing: v?.sla?.marketing, vSlaSales: v?.sla?.sales, vSlaKpis: v?.sla?.kpis,
+      vKanaeleChartKanal: v?.kanaele?.chartKanal, vKanaeleChartRoi: v?.kanaele?.chartRoi,
+      vKanaeleHeaders: v?.kanaele?.headers, vKanaeleRows: v?.kanaele?.rows, vKanaeleNote: v?.kanaele?.note,
+      vMbudgetChart: v?.mbudget?.chart, vMbudgetHeaders: v?.mbudget?.headers, vMbudgetRows: v?.mbudget?.rows, vMbudgetNote: v?.mbudget?.note,
+      vBrandChart: v?.brand?.chart, vBrandHeaders: v?.brand?.headers, vBrandRows: v?.brand?.rows, vBrandNote: v?.brand?.note,
+      vContentThemes: v?.content?.themes, vContentIdeas: v?.content?.ideas, vContentPlanNote: v?.content?.planNote,
+      vContentCalendarHeaders: v?.content?.calendarHeaders, vContentCalendarRows: v?.content?.calendarRows, vContentDraftNote: v?.content?.draftNote,
+      vToolsIntro: v?.tools?.intro, vToolsCatHeaders: v?.tools?.catHeaders, vToolsCatRows: v?.tools?.catRows,
+      vToolsWhyImportant: v?.tools?.whyImportant, vToolsProfiles: v?.tools?.toolProfiles, vToolsHypothesis: v?.tools?.hypothesis,
+      vToolsToolboxHeaders: v?.tools?.toolboxHeaders, vToolsToolboxRows: v?.tools?.toolboxRows, vToolsLimits: v?.tools?.limits,
+      vPlanungIntro: v?.planung?.intro, vPlanungTimeline: v?.planung?.timeline,
+      vPlanungChartBudget: v?.planung?.chartBudget, vPlanungChartKpi: v?.planung?.chartKpi,
+      vPlanungKpiHeaders: v?.planung?.kpiHeaders, vPlanungKpiRows: v?.planung?.kpiRows,
+      vPlanungBudgetHeaders: v?.planung?.budgetHeaders, vPlanungBudgetRows: v?.planung?.budgetRows, vPlanungNote: v?.planung?.note,
+      vKampagneIntro: v?.kampagne?.intro, vKampagneKpis: v?.kampagne?.kpis, vKampagneChartBudget: v?.kampagne?.chartBudget,
+      vKampagneQuoteCard: v?.kampagne ? { title: 'Kernbotschaft', paragraphs: [v.kampagne.quote] } : undefined,
+      vKampagneZielgruppeCard: v?.kampagne ? { title: 'Zielgruppe', paragraphs: [v.kampagne.zielgruppe] } : undefined,
+      vKampagneHeaders: v?.kampagne?.headers, vKampagneRows: v?.kampagne?.rows, vKampagneNote: v?.kampagne?.note,
+      vKampagneInternalParagraphs: v?.kampagne ? [v.kampagne.internalResourcesNote] : undefined,
+
+      fGuvChartErloese: f?.guv?.chartErloese, fGuvChartKosten: f?.guv?.chartKosten,
+      fGuvHeaders: f?.guv?.headers, fGuvRows: f?.guv?.rows, fGuvNote: f?.guv?.note,
+      fBilanzHeaders: f?.bilanz?.headers, fBilanzRows: f?.bilanz?.rows,
+      fBilanzKpiHeaders: f?.bilanz?.kpiHeaders, fBilanzKpiRows: f?.bilanz?.kpiRows, fBilanzNote: f?.bilanz?.note,
+      fUnitKpis: f?.unit?.kpis, fUnitChartMrr26: f?.unit?.chartMrr26, fUnitChartChurn26: f?.unit?.chartChurn26,
+      fUnitHeaders: f?.unit?.headers, fUnitRows: f?.unit?.rows, fUnitNote: f?.unit?.note,
+      fBudgetChart: f?.budget?.chart, fBudgetHeaders: f?.budget?.headers, fBudgetRows: f?.budget?.rows,
+      fBudgetResultHeaders: f?.budget?.resultHeaders, fBudgetResultRows: f?.budget?.resultRows, fBudgetNote: f?.budget?.note,
+
+      oHeadcountChart: o?.headcount?.chart, oHeadcountHeaders: o?.headcount?.headers, oHeadcountRows: o?.headcount?.rows, oHeadcountNote: o?.headcount?.note,
+      oHrHeaders: o?.hr?.headers, oHrRows: o?.hr?.rows, oHrNote: o?.hr?.note,
+      oTeamHeaders: o?.team?.headers, oTeamRows: o?.team?.rows, oTeamNote: o?.team?.note,
+
+      sOkrChart: s?.okr?.chart, sOkrHeaders: s?.okr?.headers, sOkrRows: s?.okr?.rows, sOkrNote: s?.okr?.note,
+      sBscHeaders: s?.bsc?.headers, sBscRows: s?.bsc?.rows,
+      sMassnahmenHeaders: s?.massnahmen?.headers, sMassnahmenRows: s?.massnahmen?.rows, sMassnahmenNote: s?.massnahmen?.note,
+      sTreiberChart: s?.treiber?.chart, sTreiberHeaders: s?.treiber?.headers, sTreiberRows: s?.treiber?.rows, sTreiberNote: s?.treiber?.note,
+      sRisikoHeaders: s?.risiko ? [...s.risiko.headers, 'Gegenmaßnahme'] : undefined,
+      sRisikoRows: s?.risiko ? s.risiko.rows.map((row, i) => [...row, (s.risiko.gegenmassnahmen[i] || '').replace(/^R\d+:\s*/, '')]) : undefined,
+      sRisikoNote: s?.risiko?.note,
+
+      rSatzungItems: r?.satzung ? r.satzung.paragraphs.map(pp => pp.title + ' — ' + pp.text) : undefined,
+      rSatzungSignature: r?.satzung?.signature,
+      rGesellschafterHeaders: r?.gesellschafter?.headers, rGesellschafterRows: r?.gesellschafter?.rows,
+      rGesellschafterNote: r?.gesellschafter?.note, rGesellschafterNoteWarn: r?.gesellschafter?.noteWarn,
+      rHandelsregisterIntro: r?.handelsregister?.intro, rHandelsregisterItems: r?.handelsregister?.items, rHandelsregisterSignature: r?.handelsregister?.signature,
+      rGfCards: r?.gf?.cards, rGfSignature: r?.gf?.signature,
+      rMietvertragHeaders: r?.mietvertrag?.headers, rMietvertragRows: r?.mietvertrag?.rows,
+      rMietvertragCards: r?.mietvertrag?.cards, rMietvertragNote: r?.mietvertrag?.note,
+
+      jRahmenTitle: j?.projekt?.rahmen?.title, jRahmenHeaders: j?.projekt?.rahmen?.headers, jRahmenRows: j?.projekt?.rahmen?.rows,
+      jWarum: j?.projekt?.warum, jZiel: j?.projekt?.ziel, jAnforderungen: j?.projekt?.anforderungen,
+      jTaskHeaders: j?.projekt?.taskHeaders, jTaskRows: j?.projekt?.taskRows,
+      jQuellenHeaders: j?.quellen?.headers, jQuellenRows: j?.quellen?.rows, jQuellenNote: j?.quellen?.note,
+    };
+  }
+}
+</script>
+</body>
+</html>

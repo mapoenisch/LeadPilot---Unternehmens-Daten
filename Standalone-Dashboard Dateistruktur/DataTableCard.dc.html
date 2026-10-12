@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/styles.css">
+  <script src="_ds/leadpilot-designsystem-8c96812c-8272-4169-ac82-5e0f9b2372ce/_ds_bundle.js"></script>
+</helmet>
+<x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Card" padding="0" style="overflow:hidden" hint-size="100%,220px">
+  <sc-if value="{{ hasTitle }}">
+    <div style="padding:var(--space-4) var(--space-4) 0">
+      <div style="font-family:var(--font-body);font-size:var(--text-small);font-weight:var(--weight-semibold);color:var(--color-text)">{{ title }}</div>
+      <sc-if value="{{ hasSubtitle }}"><div style="font-family:var(--font-body);font-size:var(--text-tiny);color:var(--color-text-muted);margin-top:2px">{{ subtitle }}</div></sc-if>
+    </div>
+  </sc-if>
+  <div style="padding:var(--space-3) var(--space-4) var(--space-4);overflow-x:auto">
+    <x-import component-from-global-scope="LeadPilotDesignSystem_8c9681.Table" columns="{{ columns }}" rows="{{ rows }}" hint-size="100%,auto"></x-import>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:260}}">
+class Component extends DCLogic {
+  renderVals() {
+    const headers = this.props.headers ?? [];
+    const rowsIn = this.props.rows ?? [];
+    const columns = headers.map((h, i) => ({ key: 'c' + i, label: h }));
+    const rows = rowsIn.map(r => {
+      const o = {};
+      headers.forEach((_, i) => { o['c' + i] = r[i]; });
+      return o;
+    });
+    return {
+      title: this.props.title ?? '',
+      hasTitle: !!this.props.title,
+      subtitle: this.props.subtitle ?? '',
+      hasSubtitle: !!this.props.subtitle,
+      columns,
+      rows,
+    };
+  }
+}
+</script>
+</body>
+</html>

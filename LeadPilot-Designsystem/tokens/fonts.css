@@ -1,6 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@font-face{font-family:'LeadPilot Grotesk';font-weight:400;font-style:normal;font-display:swap;src:url('../fonts/LeadPilotGrotesk-Regular.woff2') format('woff2');}
+@font-face{font-family:'LeadPilot Grotesk';font-weight:500;font-style:normal;font-display:swap;src:url('../fonts/LeadPilotGrotesk-Medium.woff2') format('woff2');}
+@font-face{font-family:'LeadPilot Grotesk';font-weight:600;font-style:normal;font-display:swap;src:url('../fonts/LeadPilotGrotesk-SemiBold.woff2') format('woff2');}
+@font-face{font-family:'LeadPilot Grotesk';font-weight:700;font-style:normal;font-display:swap;src:url('../fonts/LeadPilotGrotesk-Bold.woff2') format('woff2');}
 :root{
---font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+--font-display:'LeadPilot Grotesk','Space Grotesk',ui-sans-serif,system-ui,sans-serif;
 --font-body:'Inter',ui-sans-serif,system-ui,sans-serif;
 --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
 }

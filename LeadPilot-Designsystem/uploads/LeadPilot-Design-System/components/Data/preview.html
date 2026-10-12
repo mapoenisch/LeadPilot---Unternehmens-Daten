@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" height=320 subtitle="Table" page -->
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js"></script>
+<div id="root" style="background:var(--color-bg);padding:24px;"></div>
+<script type="text/babel">
+const { Table, Badge } = window.LeadPilotDesignSystem_8c9681;
+function Demo(){
+  const columns = [
+    {key:'name',label:'Name'},
+    {key:'company',label:'Company'},
+    {key:'status',label:'Status', render:r => <Badge variant={r.status==='Won'?'cyan':r.status==='Hot'?'orange':'neutral'}>{r.status}</Badge>},
+  ];
+  const rows = [
+    {name:'Ari Chen', company:'Northwind', status:'Hot'},
+    {name:'Priya Rao', company:'Fenwick Co', status:'Won'},
+    {name:'Sam Okafor', company:'Delta Labs', status:'New'},
+  ];
+  return <Table columns={columns} rows={rows} />;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>

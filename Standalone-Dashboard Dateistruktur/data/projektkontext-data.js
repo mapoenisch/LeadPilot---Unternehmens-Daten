@@ -1,0 +1,65 @@
+export const PROJEKT = {
+  rahmen: { title: 'Der Rahmen', headers: ['Merkmal','Angabe'], rows: [
+    ['Weiterbildung','Digital Sales Manager'],
+    ['Bildungsträger','Digital Business Akademie (DBA), Batch 8'],
+    ['Modul','Modul 2 — Unternehmensprojekt'],
+    ['Format','Remote / Online'],
+    ['Teilnehmer','Marc Pönisch'],
+    ['CRM-Umgebung','HubSpot (alle Aufgaben werden auf das fiktive Unternehmen angewendet)'],
+  ]},
+  warum: { title: 'Warum ein fiktives Unternehmen?', items: [
+    'Vertrieb, Marketing und CRM praktisch umsetzen',
+    'Alle Prozesse in HubSpot mit einer echten Unternehmensstruktur testen',
+    'Das Gelernte direkt auf Karriere oder eigene Projekte übertragen',
+    'Erfahrung in der Erstellung und Umsetzung einer digitalen Vertriebsstrategie sammeln',
+  ]},
+  ziel: { title: 'Ziel am Ende von Modul 2', items: [
+    'Ein vollständiges Vertriebs- und Marketingkonzept für das Unternehmen',
+    'Eine funktionierende CRM-Umgebung in HubSpot mit realen Daten und Prozessen',
+    'Praxisnahe Erfahrung in Sales, Marketing und CRM-Tools',
+    'Eine Präsentation des Unternehmens und der Strategie',
+  ]},
+  anforderungen: { title: 'Anforderungen an die Geschäftsidee', items: [
+    'Ein klares Angebot: KI-gestütztes Sales-CRM als SaaS',
+    'Eine Zielgruppe: Vertriebsleiter in B2B-KMU (0–200 MA)',
+    'Ein Problem, das gelöst wird: Leads werden nach dem Erstkontakt nicht systematisch nachverfolgt',
+  ]},
+  taskHeaders: ['Task Sheet','Titel','Ergebnis'],
+  taskRows: [
+    ['2.1.11','Intro Sheet: Kick-Off Unternehmensprojekt','Rahmen und Anforderungen des Unternehmensprojekts'],
+    ['2.1.11 (Aufg. 1–3)','Meine Geschäftsidee','Branchenwahl, Problemidentifikation, Marktcheck, SWOT, Value Proposition'],
+    ['2.1.12','Buyer Personas & Hero Statement','Persona „Vertriebsleiter-Volker", Empathy Map, Hero Statement'],
+    ['2.1.14','Digitale Tools im Vertrieb','Tool-Kategorien, Automatisierungsbausteine, Apollo.io & Calendly'],
+    ['—','Business Model Canvas','Alle neun BMC-Bausteine, Preisstrategie'],
+    ['—','Ideal Customer Profile','Firmografie, Trigger, Technografie, Ausschlusskriterien'],
+    ['—','Content-Strategie','Content-Themen, Google-Trends-Recherche, Redaktionsplan'],
+    ['—','Geschäftsbericht 2025','GuV, Bilanz, Funnel, Kunden, Produkt, Personal, Marketing'],
+    ['—','Jährlicher Unternehmens-Check-up','Plan-vs-Ist, Markt, Wettbewerb, Unit Economics, BSC, Roadmap'],
+    ['—','Rechtsdokumente','Satzung, Gesellschafterliste, Handelsregisteranmeldung, GF-Vertrag, Mietvertrag'],
+  ],
+};
+
+export const QUELLEN = {
+  headers: ['Kategorie','Quelle','Verwendung'],
+  rows: [
+    ['Stammdaten','LeadPilot Faktenblatt v1.1','Verbindliche Grundlage aller Zahlen in diesem Dashboard'],
+    ['Finanzen','LeadPilot Jahresabschluss 2025 (xlsx)','Bilanz, GuV, Kennzahlen — formelbasiert und geprüft'],
+    ['Berichtswesen','LeadPilot Geschäftsbericht 2025 (xlsx)','Dashboard, Kunden, Vertrieb, Produkt, Personal'],
+    ['Analyse','LeadPilot Unternehmens-Check-up 2025','Diagnose, SWOT, Maßnahmenplan'],
+    ['Vertrieb','LeadPilot CRM (xlsx)','Aktive Pipeline Stand Juli 2026'],
+    ['Zielkunden','Ideal Customer Profile, Buyer Persona, Empathy Map','Segmentierung und Positionierung'],
+    ['Recht','Satzung, Gesellschafterliste, Handelsregisteranmeldung','Gründungs- und Gesellschafterdaten'],
+    ['Marktvolumen','Europäischer Cloud-CRM-Markt: 14,23 Mrd. USD (2026), CAGR 5,23 %','Abschnitt Marktlage'],
+    ['Wachstum','Europäischer CRM-SaaS-Markt: CAGR 14,5 % (2025–2033)','Abschnitt Marktlage'],
+    ['Länderanteil','Deutschland als größter CRM-Einzelmarkt Europas, Anteil 24,4 % (2025)','Abschnitt Marktlage'],
+    ['Wettbewerb','Marktanteile Brevo, Zendesk, HubSpot, Salesforce, Pipedrive','Abschnitt Wettbewerbslandschaft'],
+    ['Förderlandschaft','Technologiegründerfonds Sachsen, High-Tech Gründerfonds, SAB','Finanzierungshistorie'],
+    ['Steuern','Gewerbesteuer-Hebesatz Leipzig 460 %','Effektive Steuerbelastung von rund 31,9 %'],
+  ],
+  note: { title: 'Methodischer Hinweis', variant: 'info', paragraphs: [
+    'LeadPilot ist ein fiktives Schulungsunternehmen, erstellt im Rahmen der Weiterbildung zum Digital Sales Manager (DBA) durch Marc Pönisch.',
+    'Sämtliche Unternehmenszahlen sind exemplarisch, aber so konstruiert, dass sie sich gegenseitig tragen und den realen Größenordnungen deutscher B2B-SaaS-Unternehmen in der Seed-Phase entsprechen.',
+    'Marktdaten, Wettbewerbsanteile, Förderinstrumente und steuerliche Rahmenbedingungen sind dagegen recherchierte Realdaten.',
+    'Stand: Juli 2026 · Version 2.0 · Datenbasis LeadPilot Faktenblatt v1.1',
+  ]},
+};
