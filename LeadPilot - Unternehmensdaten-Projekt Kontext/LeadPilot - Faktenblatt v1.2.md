@@ -1,4 +1,4 @@
-# LeadPilot GmbH — Faktenblatt v1.1
+# LeadPilot GmbH — Faktenblatt v1.2
 
 **Verbindliche Stammdaten für alle Aufgaben im Rahmen der Weiterbildung Digital Sales Manager (DBA)**
 
@@ -6,10 +6,12 @@
 | :-- | :-- |
 | **Szenario** | B — Early-Stage SaaS |
 | **Berichtsjahr** | GJ 2025 (01.01.–31.12.2025) |
-| **Stand** | Juli 2026 · Version 1.1 |
+| **Stand** | Oktober 2026 · Version 1.2 |
 | **Autor** | Marc Pönisch |
 | **Status** | Single Source of Truth — bei Widersprüchen in anderen Dokumenten gilt dieses Blatt |
 
+> **Änderung gegenüber v1.1 (Oktober 2026):** Abgleich mit dem LeadPilot Dashboard-CRM. Die Anwendung ist bindend; wo sie vom Faktenblatt v1.1 abwich, wurde das Faktenblatt angepasst. Betroffen sind Funnel-Quoten (Abschnitt 8), Produktbewertungen und Roadmap-Status (Abschnitt 9), Negative-Fit im ICP (Abschnitt 13) und das Handelsregister (Abschnitt 1). Neu aufgenommen wurden Anwendungs-Inhalte, die v1.1 nicht enthielt (Abschnitte 14–16). Alle Finanz-, Kunden- und SaaS-Kennzahlen aus v1.1 stimmen mit der Anwendung überein und bleiben unverändert. Einzelheiten und noch offene Widersprüche innerhalb der Anwendung stehen in Abschnitt 17.
+>
 > **Änderung gegenüber v1.0:** Die Erlös- und Kostenpositionen wurden aus der monatlichen MRR-Reihe rückgerechnet und sind jetzt vollständig formelkonsistent. Umsatz, Umsatzkosten und OPEX verschieben sich leicht; Jahresfehlbetrag, Bilanz und alle SaaS-Kernmetriken bleiben unverändert.
 >
 > **Ergänzung August 2026:** Der zuvor kursierende Grundbuchauszug ist vollständig entfernt worden — er war zeitlich unmöglich (Eintragung 02.05.2022, vor Beurkundung des Gesellschaftsvertrags am 21.07.2022) und nie Bestandteil einer Übungsaufgabe. LeadPilot besitzt keinen Grundbesitz und ist an ihrem Sitz Mieterin. Rechtsgrundlage ist der Gewerberaummietvertrag vom 15.08.2022 mit der Augustusplatz Immobilien Leipzig GmbH & Co. KG (Mietbeginn 01.09.2022, Laufzeit bis 31.08.2027), der die Position „Miete, Recht, Buchhaltung, Versicherung" in Abschnitt 5 unterlegt.
@@ -26,6 +28,7 @@
 | Rechtsform | GmbH, Amtsgericht Leipzig |
 | Gegründet | 21. Juli 2022 (Beurkundung Gesellschaftsvertrag) |
 | Produkt-Launch (GA) | Q1 2024 → **GJ 2025 = zweites volles Marktjahr** |
+| Handelsregister | Amtsgericht Leipzig, HRB 40912 |
 | Sitz | Augustusplatz 9, 04109 Leipzig, Sachsen (**angemietete Büroflächen**, Gewerberaummietvertrag v. 15.08.2022, Laufzeit bis 31.08.2027) |
 | Gründer & Geschäftsführer | Marc Pönisch (CEO), Tobias Heine (CTO) |
 | Stammkapital | 31.250 € (ursprünglich 25.000 €, Kapitalerhöhung Q1 2024) |
@@ -256,13 +259,14 @@
 | Stufe | Q1 | Q2 | Q3 | Q4 | FY 2025 | Ø/Monat | Conversion |
 | :-- | --: | --: | --: | --: | --: | --: | :-- |
 | Leads gesamt | 384 | 432 | 456 | 504 | **1.776** | 148 | — |
-| MQL | 108 | 126 | 132 | 150 | **516** | 43 | 29 % der Leads |
-| SQL | 40 | 47 | 50 | 55 | **192** | 16 | 38 % der MQL |
+| MQL | 108 | 126 | 132 | 150 | **516** | 43 | 29,1 % der Leads |
+| SQL | 40 | 47 | 50 | 55 | **192** | 16 | 37,2 % der MQL |
 | Testversionen gestartet | 57 | 64 | 68 | 75 | **264** | 22 | inkl. Self-Service |
-| Angebote | 23 | 26 | 28 | 31 | **108** | 9 | 56 % der SQL |
-| **Neukunden** | 10 | 11 | 12 | 14 | **47** | 3,9 | **Win Rate 43 %** |
+| Angebote | 23 | 26 | 28 | 31 | **108** | 9 | 56,3 % der SQL |
+| **Neukunden** | 10 | 11 | 12 | 14 | **47** | 3,9 | **Win Rate 43,5 %** |
 
-- **Trial-to-Paid:** 18 % (47 Neukunden aus 264 Testversionen)
+- **Quoten-Regel:** Jede Quote = Jahreswert der Stufe ÷ Jahreswert der Vorstufe (Angebote: Zähler Angebote, Nenner SQL), einheitlich auf eine Nachkommastelle gerundet.
+- **Trial-to-Paid:** 18 % (47 Neukunden aus 264 Testversionen). Potenzial: 8 Prozentpunkte mehr (18 % → 26 %) entsprechen rund 21 Neukunden (+90.000 € ARR).
 - **Ø Vertragswert Neukunde (ACV):** 4.300 €
 - **Sales Cycle:** Ø 38 Tage (Starter 21 Tage, Growth 52 Tage)
 
@@ -294,14 +298,16 @@
 | Metrik | Ist 2025 | Ziel | Bewertung |
 | :-- | --: | --: | :-- |
 | Uptime | 99,7 % | 99,5 % | erreicht |
-| Aktivierungsrate | 58 % | 70 % | knapp verfehlt |
-| WAU / MAU | 59 % | 60 % | knapp verfehlt |
+| Aktivierungsrate | 58 % | 70 % | verfehlt |
+| WAU / MAU | 59 % | 60 % | verfehlt |
 | Nutzung KI-Scoring (Kernfeature) | 47 % | 65 % | verfehlt |
 | Onboarding-Abschlussquote | 74 % | 90 % | verfehlt |
 | Time-to-Value | 11 Tage | 7 Tage | verfehlt |
 | Ø Support-Lösungszeit | 31 h | 24 h | knapp verfehlt |
 | CSAT | 4,0 | 4,2 | knapp verfehlt |
 | Net Promoter Score | 34 | 40 | verfehlt |
+| Time-to-First-Action (Onboarding) | 18 Minuten | < 30 Minuten | erreicht |
+| Support-Tickets pro Monat | 14 | < 20 | erreicht |
 
 **Architektur (DSGVO-Positionierung)**
 
@@ -317,8 +323,8 @@
 | v1.3 | Mai 2025 | KI-Scoring v1.5, Trefferquote 71 % |
 | v1.4 | Aug 2025 | Integration Microsoft 365 und Google Workspace |
 | v1.5 | Nov 2025 | Überfälligkeits-Dashboard für die Vertriebsleitung |
-| v2.0 | geplant Q1 2026 | Geführter Trial-Flow |
-| v2.1 | geplant Q2 2026 | Zapier-/Make-Anbindung |
+| v2.0 | geplant Q1 2026 · Status: in Entwicklung | Geführter Trial-Flow |
+| v2.1 | geplant Q2 2026 · Status: geplant | Zapier-/Make-Anbindung |
 
 > Nicht mehr verwenden: HubSpot-Zertifizierung, LinkedIn-Sales-Navigator-Integration, Mobile App, Predictive Churn Alert, Multi-Language-Support, „40+ Integrationen". Ein Team von vier Entwicklern kann das nicht leisten.
 
@@ -381,7 +387,7 @@
 
 ---
 
-## 13. Ideal Customer Profile — unverändert gültig
+## 13. Ideal Customer Profile (Negative-Fit angepasst an die Anwendung)
 
 | Kriterium | Ausprägung |
 | :-- | :-- |
@@ -393,11 +399,166 @@
 | CRM-Reifegrad | kein CRM oder Excel-/Google-Listen |
 | Budget | 49–89 €/Nutzer/Monat |
 | Entscheidung | Vertriebsleitung allein oder mit Geschäftsführung, kurze Wege |
-| **Negative-Fit** | > 200 Mitarbeitende · etabliertes Enterprise-CRM · reines B2C · Ein-Personen-Vertrieb · Anforderung ISO 27001/TISAX · mehrjährige Rahmenverträge |
+| **Negative-Fit** | Großkonzerne > 200 Mitarbeitende mit komplexer Enterprise-IT · reine B2C-Unternehmen ohne mehrstufigen Vertrieb · Unternehmen ohne laufendes Software-Budget · Kleinstkunden mit Ein-Personen-Vertrieb bzw. nur 2–3 Nutzern |
 
 **Buyer Persona:** Vertriebsleiter-Volker, 47, Head of Sales bei einem Maschinenbau-Zulieferer mit 85 Mitarbeitenden im Raum Stuttgart, 7-köpfiges Vertriebsteam.
 → Volker ist als **Growth-Kunde mit 7 Nutzern = 623 €/Monat** einzuordnen und liegt damit über der ARPA von 520 € — ein Zielkunde im oberen Drittel.
 
+
 ---
 
-*Version 1.1 · Juli 2026 · Bei Widersprüchen in anderen Projektdokumenten gilt dieses Faktenblatt.*
+## 14. Ergänzungen aus der Anwendung: Kunden, Vertrieb, Finanzen
+
+**ARR nach Segment (31.12.2025, Summe 411.840 €)**
+
+| Branche | ARR | Anteil ARR | Anteil Kunden |
+| :-- | --: | --: | --: |
+| Maschinenbau / Industrie | 178.560 € | 43,35 % | 36 % |
+| IT / Software | 112.320 € | 27,27 % | 27 % |
+| Großhandel | 78.960 € | 19,17 % | 21 % |
+| Agenturen | 42.000 € | 10,20 % | 15 % |
+
+**Top-10-Referenzkunden (ICP-konform, < 200 MA)** — ARR = Nutzer × Paketpreis × 12 (Pro: Referenz 80 €)
+
+| Kunde | Branche | MA | Paket | Nutzer | ARR |
+| :-- | :-- | --: | :-- | --: | --: |
+| Northwind GmbH | Maschinenbau | 85 | Growth | 10 | 10.680 € |
+| Fenwick Co. | IT & Software | 42 | Growth | 8 | 8.544 € |
+| Delta Labs | Großhandel | 110 | Pro | 14 | 13.440 € |
+| Ocular Systems | Agenturen | 28 | Starter | 5 | 2.940 € |
+| Brightline Solutions | IT & Software | 65 | Growth | 10 | 10.680 € |
+| Kestrel Components | Maschinenbau | 140 | Pro | 15 | 14.400 € |
+| Vektor Dynamics | Maschinenbau | 95 | Growth | 12 | 12.816 € |
+| Hansa Automation | IT & Software | 50 | Growth | 10 | 10.680 € |
+| Konzett Systems | Großhandel | 78 | Growth | 9 | 9.612 € |
+| Siegfried Precision | Maschinenbau | 115 | Pro | 16 | 15.360 € |
+
+**Gründe der 17 Kündigungen:** zu klein / kein Vertrieb 8 · Onboarding nie abgeschlossen 5 · Preis 2 · Wechsel zum Wettbewerber 2
+
+**ARR-Verlauf (Quartalsende)**
+
+| Q1 24 | Q2 24 | Q3 24 | Q4 24 | Q1 25 | Q2 25 | Q3 25 | Q4 25 |
+| --: | --: | --: | --: | --: | --: | --: | --: |
+| 120.000 € | 145.000 € | 170.000 € | 207.792 € | 248.472 € | 294.588 € | 348.840 € | 411.840 € |
+
+**Personalentwicklung (FTE):** Q1 24 4,0 · Q2 24 5,0 · Q3 24 6,0 · Q4 24 8,0 · Q1 25 8,5 · Q2 25 9,0 · Q3 25 9,5 · Q4 25 10,0
+
+**Marketing je Kanal GJ 2025** (Marketing-CAC = Spend ÷ Neukunden)
+
+| Kanal | Budget 2025 | Spend Ist | Abweichung | Neukunden | Marketing-CAC |
+| :-- | --: | --: | --: | --: | --: |
+| LinkedIn-Content & Ads | 16.000 € | 17.712 € | +11 % | 18 | 984 € |
+| SEO / Content | 8.000 € | 6.560 € | −18 % | 10 | 656 € |
+| Partner / Empfehlung | 5.000 € | 3.936 € | −21 % | 8 | 492 € |
+| Webinare | 5.000 € | 4.920 € | −2 % | 6 | 820 € |
+| Outbound-E-Mail | 5.000 € | 7.380 € | +48 % | 5 | 1.476 € |
+| **Gesamt** | **39.000 €** | **40.500 €** | **+3,8 %** | **47** | **862 €** |
+
+*Die Kanalwerte der Anwendung addieren sich rundungsbedingt auf 40.508 €; maßgeblich ist der Gesamtwert 40.500 €.*
+
+**Übergabe Marketing → Sales (SLA)**
+
+- Übergabe, wenn der Lead im ICP-Scoring „heiß" (Score ≥ 80) erreicht; MQL wird zum SQL, sobald Erstgespräch oder Demo vereinbart ist.
+- Marketing: ca. 43 qualifizierte MQL pro Monat, Kriterium ICP-Fit und Score „heiß".
+- Sales: Erstkontakt innerhalb von 24 Stunden (werktags), mindestens 3 Kontaktversuche in der ersten Woche, Rückmeldung SQL oder begründete Disqualifikation.
+
+**Plan-GuV 2026** *(Angaben in EUR)*
+
+| Position | 2025 | Plan 2026 |
+| :-- | --: | --: |
+| Abo-Umsatz | 307.600 | 620.000 |
+| Onboarding & Setup | 23.000 | 35.000 |
+| Sonstige Erlöse | 5.400 | 8.000 |
+| **Umsatzerlöse** | **336.000** | **663.000** |
+| Umsatzkosten | −121.000 | −192.000 |
+| **Bruttogewinn** | **215.000** | **471.000** |
+| Sales & Marketing | −209.000 | −260.000 |
+| Forschung & Entwicklung | −208.000 | −240.000 |
+| General & Administrative | −107.000 | −120.000 |
+| **EBITDA** | **−309.000** | **−149.000** |
+| Abschreibungen | −18.000 | −22.000 |
+| **EBIT** | **−327.000** | **−171.000** |
+| Finanzergebnis | −5.500 | −5.000 |
+| **Ergebnis vor Steuern** | **−332.500** | **−176.000** |
+| Sonstige Steuern | −1.500 | −2.000 |
+| **Jahresfehlbetrag** | **−334.000** | **−178.000** |
+
+**Plan-MRR 2026:** Jan 34.320 € · Mär 38.000 € · Jun 42.500 € · Sep 47.000 € · Dez 51.667 € (× 12 ≈ 620.000 € ARR).
+**Plan-Churn 2026:** Q1 2,6 % · Q2 2,3 % · Q3 2,0 % · Q4 1,8 %. **Plan-Trial-to-Paid 2026:** Q1 20 % · Q2 22 % · Q3 24 % · Q4 26 %.
+**Plan-Kostenbudget 2026 (Gesamt 830.000 €):** Personal 600.000 € · Cloud & KI-API 60.000 € · Marketing & Ads 55.000 € · Strategische Initiativen 44.000 € · Tools & Lizenzen 28.000 € · Büro & Verwaltung 25.000 € · Recht & Security 18.000 €.
+
+**Wachstumstreiber 2026 (ARR-Effekt, Summe 208.000 € ≈ Lücke 411.840 € → 620.000 €):** Trial-to-Paid 18 → 26 % 72.000 € · Churn 2,8 → 1,8 % 58.000 € · Partnerprogramm 34.000 € · ICP-Schärfung (ARPA) 26.000 € · Upsell Starter → Growth 18.000 €.
+
+---
+
+## 15. Ergänzungen aus der Anwendung: Marketing H2 2026, Strategie, Risiken
+
+**Marketingplanung Aug 2026 – Jan 2027** (in der Anwendung „Marketingplanung H2 2026“)
+
+| Aug 26 | Sep 26 | Okt 26 | Nov 26 | Dez 26 | Jan 27 |
+| --: | --: | --: | --: | --: | --: |
+| 2.500 € | 3.375 € | 3.375 € | 3.375 € | 2.500 € | 4.250 € |
+
+Die Monatswerte (Summe 19.375 €) sind der Teilplan. Das Gesamtbudget H2 2026 beträgt laut Initiativen **30.000 €**:
+
+| Initiative | Budget | Ziel |
+| :-- | --: | :-- |
+| Partner-Netzwerk Ausbau | 12.000 € | +15 Neukunden über Empfehlungen |
+| SEO Content Expansion | 10.000 € | Verdopplung des organischen Traffics |
+| Guided Onboarding Campaign | 8.000 € | Trial-to-Paid steigern |
+
+**Plan-KPIs Jan 2027 (gegenüber Basis 2025):** Neukunden/Monat 8 (4) · Marketing-CAC 720 € (862 €) · Trial-to-Paid 24 % (18 %) · Churn/Monat 2,2 % (2,8 %) · KI-Scoring-Nutzung 65 % (47 %).
+
+**Kampagne „LeadPilot Connect"** (Multichannel-Outbound für Nurturing-Sequenzen): Budget 2.500 € (Paid Social 1.000 €, Content 875 €, Freelance 375 €, Kontingenz 250 €); Ergebnis: 1.250 erreichte Entscheider, 48 Demo-Anfragen, 12 abgeschlossene Deals.
+
+**Maßnahmenportfolio 2026:** Guided Trial Onboarding Flow v2.0 (P1 kritisch, CTO) · Partner- und Empfehlungskanal Relaunch (P1 hoch, CEO) · ICP-Qualifizierung im Inbound (P1 hoch, Sales & Marketing) · Zapier-/Make-Connector v2.1 (P2 mittel, Engineering).
+
+**Risiken:** Trial-Conversion stagniert bei 18 % (mittel / hoch) · Runway von 14 Monaten schrumpft (mittel / hoch) · CTO als Single Point of Failure (hoch / kritisch) · Churn im Kleinstkundensegment bleibt hoch (mittel / mittel).
+
+**Buyer Persona Volker, ergänzt:** Ziele: Umsatz um 15 % steigern ohne Teamvergrößerung, verlässliche Pipeline-Übersicht, Digitalisierung ohne langes IT-Projekt. Schmerzpunkt: bis zu 70 % der Marketing-Leads werden nach Erstkontakt nicht konsequent nachgefasst. Kanäle: LinkedIn (täglich), Branchen-Empfehlungen, SEO und Fachartikel.
+
+---
+
+## 16. Ergänzungen aus der Anwendung: Produkt und Simulation
+
+- **Produktmodule:** Smart Lead Capture · KI-Lead-Scoring v1.5 (Bewertung 0–100) · Nurturing-Sequenzen · Pipeline-Cockpit (Status: New, MQL, SQL, Hot, Won, Lost).
+- **Positionierung:** Einrichtung in unter 30 Minuten ohne eigene IT-Abteilung; Hosting in Frankfurt am Main.
+- **CRM-Datenbasis der Anwendung:** 20 Accounts, 100 Kontakte, 40 Funnel-Deals (Demo-Datenbestand, nicht identisch mit den 66 Kunden).
+- **Simulations-Ausgangswerte (Dezember 2025):** 66 Kunden · MRR 34.320 € · ARR 411.840 €. Standardparameter: Trial-to-Paid 18 % · Churn 2,8 % pro Monat · Sales Cycle 38 Tage · Sales-Kapazität 2 FTE · Customer Success 2 FTE · Marketing-Budget 65.000 € jährlich · Rabattquote 0 %.
+
+---
+
+## 17. Abgleichsprotokoll v1.1 → v1.2
+
+**A. Faktenblatt angepasst (Anwendung bindend)**
+
+| Thema | v1.1 | v1.2 (= Anwendung) |
+| :-- | :-- | :-- |
+| MQL-Quote | 29 % der Leads | 29,1 % |
+| SQL-Quote | 38 % der MQL | 37,2 % |
+| Angebotsquote | 56 % der SQL | 56,3 % |
+| Win Rate | 43 % | 43,5 % |
+| Aktivierungsrate, WAU/MAU | „knapp verfehlt" | „verfehlt" |
+| Roadmap v2.0 / v2.1 | nur „geplant" | v2.0 in Entwicklung, v2.1 geplant |
+| Negative-Fit im ICP | sechs Kriterien | drei Kriterien laut Anwendung, plus Kleinstkunden (Entscheidung Marc 13.10.2026, passend zum Churn-Befund in Abschnitt 4) |
+| Handelsregister | nicht genannt | HRB 40912, Amtsgericht Leipzig |
+
+**B. Ohne Abweichung geprüft:** Unternehmensprofil, Preismodell, Kundenzahlen und Paketverteilung, Branchen und Regionen, alle SaaS-Kernmetriken, MRR-Brücke und -Reihe, GuV 2025 und 2024, Kostenstruktur, Bilanz 2025, Finanzierung und Gesellschafterliste, Funnel-Absolutwerte, Kanalanteile, Unit Economics, Personal, Markt und Wettbewerb, Ziele 2026, Buyer Persona (623 €).
+
+**C. Aus v1.1 weiter gültig, aber ohne Gegenstück in der Anwendung:** Quartals-GuV, Vorjahresspalte der Bilanz, Eigenkapitalquote 71,8 %, ACV 4.300 €, Kanal-Skalierbarkeit, Sales Cycle nach Paket, Onboarding-Abschlussquote 74 %, Support-Lösungszeit 31 h, CSAT 4,0, abgeleitete Planung mit ARPA 544 €.
+
+**D. Offene Widersprüche innerhalb der Anwendung** (nicht entschieden, Klärung durch Marc nötig)
+
+1. **Trial-to-Paid-Ziel:** OKR und Plan-Charts nennen ≥ 26 % für 2026. SWOT, SWOT-Kompass, Roadmap v2.0 und die Initiative „Guided Onboarding Campaign" nennen 25 %.
+2. **Marketing-Budget 2026:** Simulation 65.000 € jährlich, Kostenbudget 2026 „Marketing & Ads" 55.000 €, H2-Initiativen 30.000 €.
+3. **Top-10-Kunden und Pro-Paket:** Die drei Pro-Kunden der Top 10 ergeben 3.600 € MRR, die Paketverteilung nennt 4.695 € für Pro (Ø 14 Nutzer × 80 € = 1.120 € statt 1.565 € je Kunde). Auch in v1.1 selbst nicht schlüssig.
+4. **Vertretung:** Handelsregister: zwei Geschäftsführer gemeinsam. Geschäftsführervertrag: jeweils einzelvertretungsberechtigt.
+5. **Kostenbudget 2026:** 830.000 € Gesamt gegenüber Plan-GuV 2026 (Umsatzkosten + Betriebskosten = 812.000 €, zzgl. Abschreibungen 22.000 €); Kategorien nicht deckungsgleich.
+6. **Marktdaten:** Die Anwendung beschriftet die Marktanteile als „Europa/DACH" und den Markt als „Cloud-CRM DACH"; die Zahlen gelten für Europa.
+7. **Repo-Kopie:** `docs/LeadPilot_Faktenblatt_v1.1.md` im Dashboard-Repo enthält in der Roadmap „planned" statt „geplant".
+8. ~~**Negative-Fit und Churn-Befund**~~ — **entschieden (Marc, 13.10.2026):** Kleinstkunden mit Ein-Personen-Vertrieb bzw. nur 2–3 Nutzern stehen wieder im Negative-Fit (Abschnitt 13). Die ICP-Seite der Anwendung nennt bisher drei Kriterien und wird bei ihrer Migration (Paket G2) angeglichen.
+9. ~~**Zeitraum „Marketingplanung H2 2026“**~~ — **entschieden (Marc, 13.10.2026):** Im Faktenblatt heißt die Reihe „Aug 2026 – Jan 2027“; die Anwendung behält ihren Titel, Werte unverändert.
+
+---
+
+*Version 1.2 · Oktober 2026 · Bei Widersprüchen in anderen Projektdokumenten gilt dieses Faktenblatt; Grundlage ist der Abgleich mit der Anwendung (Single Source of Truth).*

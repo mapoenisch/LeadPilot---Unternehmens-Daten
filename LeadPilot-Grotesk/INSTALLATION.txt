@@ -1,0 +1,27 @@
+LeadPilot Grotesk - Installation fuer Word und PowerPoint
+==========================================================
+
+Windows
+1. Alle vier .ttf-Dateien markieren, Rechtsklick > "Installieren"
+   (oder "Fuer alle Benutzer installieren").
+2. Word und PowerPoint komplett schliessen und neu starten.
+
+macOS
+1. Alle vier .ttf-Dateien markieren, Doppelklick > "Schrift installieren"
+   (Schriftsammlung oeffnet sich).
+2. Word und PowerPoint komplett beenden (Cmd+Q) und neu starten.
+
+Im Schriftmenue erscheinen drei Eintraege:
+- "LeadPilot Grotesk"           (Regular, mit Fett-Taste = Bold)
+- "LeadPilot Grotesk Medium"
+- "LeadPilot Grotesk SemiBold"
+
+Hinweise
+- Nur fuer Ueberschriften und kurze Texte nutzen, Fliesstext besser in Inter.
+- Nur Lateinische Zeichen, keine Kursivschnitte (Word erzeugt sonst
+  eine schraeggestellte Ersatzschrift).
+- Beim Weitergeben von Dokumenten: Schrift in PowerPoint/Word einbetten
+  (Datei > Optionen > Speichern > "Schriftarten in der Datei einbetten")
+  oder die Schrift auf dem Zielrechner installieren.
+- Lizenz: SIL Open Font License 1.1 (siehe OFL.txt). Weitergabe und
+  Einbettung erlaubt, die Schrift darf nicht einzeln verkauft werden.
